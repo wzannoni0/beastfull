@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum MemberStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum TransactionType {
+  CLAIM
+  DEPOSIT
+  WITHDRAWAL
+  BONUS
+  ADMIN_ADJUSTMENT
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String       @id @default(cuid())
+  username     String       @unique
+  email        String       @unique
+  passwordHash String
+  role         Role         @default(USER)
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  profile                 Profile?
+  balance                 Balance?
+  claims                  DailyClaim[]
+  transactions            Transaction[]
+  notifications           Notification[]
+  depositRequests         DepositRequest[]
+  withdrawalRequests      WithdrawalRequest[]
+  adminLogs               AdminLog[]
+  sponsoredReferrals      Referral[]      @relation("SponsorReferrals")
+  receivedReferral        Referral?       @relation("ReferredUser")
+  sponsorTeamMembers      TeamMember[]    @relation("TeamSponsor")
+  memberTeamMembership    TeamMember?     @relation("TeamMemberRelation")
+  levelHistory            LevelRecord[]
+}
+
+model Profile {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  avatarUrl    String?
+  referralCode String    @unique
+  streak       Int       @default(0)
+  currentLevel Int       @default(1)
+  badge        String    @default("Spark")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Referral {
+  id         String   @id @default(cuid())
+  sponsorId  String
+  referredId String   @unique
+  createdAt  DateTime @default(now())
+
+  sponsor  User @relation("SponsorReferrals", fields: [sponsorId], references: [id], onDelete: Cascade)
+  referred User @relation("ReferredUser", fields: [referredId], references: [id], onDelete: Cascade)
+
+  @@index([sponsorId])
+  @@map("referrals")
+}
+
+model TeamMember {
+  id         String       @id @default(cuid())
+  sponsorId  String
+  memberId   String       @unique
+  depth      Int          @default(1)
+  status     MemberStatus @default(ACTIVE)
+  createdAt  DateTime     @default(now())
+
+  sponsor User @relation("TeamSponsor", fields: [sponsorId], references: [id], onDelete: Cascade)
+  member  User @relation("TeamMemberRelation", fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([sponsorId])
+  @@map("team_members")
+}
+
+model Balance {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  amount    Decimal  @default(0) @db.Decimal(12, 2)
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("balances")
+}
+
+model DailyClaim {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Decimal  @db.Decimal(10, 2)
+  claimedAt   DateTime @default(now())
+  streakAfter Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, claimedAt])
+  @@map("daily_claims")
+}
+
+model LevelRecord {
+  id            String   @id @default(cuid())
+  userId         String
+  level          Int
+  rewardPerDay   Decimal  @db.Decimal(10, 2)
+  directRequired Int
+  balanceMin     Decimal  @db.Decimal(12, 2)
+  teamRequired   Int
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("levels")
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  userId      String
+  amount      Decimal         @db.Decimal(12, 2)
+  type        TransactionType
+  description String
+  createdAt   DateTime        @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("transactions")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model DepositRequest {
+  id         String        @id @default(cuid())
+  userId     String
+  amount     Decimal       @db.Decimal(12, 2)
+  method     String
+  status     RequestStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("deposit_requests")
+}
+
+model WithdrawalRequest {
+  id         String        @id @default(cuid())
+  userId     String
+  amount     Decimal       @db.Decimal(12, 2)
+  status     RequestStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("withdrawal_requests")
+}
+
+model AdminLog {
+  id          String   @id @default(cuid())
+  adminUserId String
+  action      String
+  targetUser  String?
+  details     String?
+  createdAt   DateTime @default(now())
+
+  admin User @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+
+  @@map("admin_logs")
+}
