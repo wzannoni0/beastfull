@@ -5,25 +5,26 @@ import Image from "next/image";
 type PremiumCanAIProps = {
   label?: string;
   power?: number;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   showPing?: boolean;
 };
 
 const sizeMap = {
-  sm: { h: 180, w: 90, barW: "w-28", labelSize: "text-[9px]" },
-  md: { h: 240, w: 120, barW: "w-36", labelSize: "text-[10px]" },
-  lg: { h: 320, w: 160, barW: "w-44", labelSize: "text-[11px]" },
+  sm: { h: 220, w: 110, barW: "w-32", labelSize: "text-[9px]" },
+  md: { h: 300, w: 150, barW: "w-40", labelSize: "text-[10px]" },
+  lg: { h: 400, w: 200, barW: "w-48", labelSize: "text-[11px]" },
+  xl: { h: 500, w: 250, barW: "w-56", labelSize: "text-xs" },
 };
 
 export function PremiumCanAI({
   label = "NEXACOLA AI CORE",
   power = 72,
-  size = "md",
+  size = "lg",
   showPing = false,
 }: PremiumCanAIProps) {
   const s = sizeMap[size];
-  const glowSize = size === "lg" ? 24 : size === "md" ? 18 : 12;
-  const glowSize2 = size === "lg" ? 45 : size === "md" ? 32 : 20;
+  const glowSize = size === "xl" ? 35 : size === "lg" ? 28 : size === "md" ? 20 : 14;
+  const glowSize2 = size === "xl" ? 60 : size === "lg" ? 50 : size === "md" ? 35 : 24;
 
   return (
     <div className="relative mx-auto select-none flex flex-col items-center">
@@ -32,10 +33,10 @@ export function PremiumCanAI({
       <div
         className="pointer-events-none absolute rounded-full animate-can-glow will-change-transform"
         style={{
-          width: s.w * 2,
-          height: s.h,
-          background: "radial-gradient(ellipse, rgba(61,127,255,0.25) 0%, rgba(112,72,255,0.15) 55%, transparent 100%)",
-          top: "50%", left: "50%",
+          width: s.w * 2.5,
+          height: s.h * 1.2,
+          background: "radial-gradient(ellipse, rgba(61,127,255,0.35) 0%, rgba(112,72,255,0.2) 50%, transparent 70%)",
+          top: "45%", left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 0,
         }}
@@ -43,13 +44,24 @@ export function PremiumCanAI({
       <div
         className="pointer-events-none absolute rounded-full animate-can-glow-subtle will-change-transform"
         style={{
-          width: s.w * 1.4,
-          height: s.h * 0.7,
-          background: "radial-gradient(ellipse, rgba(239,74,255,0.12) 0%, transparent 70%)",
-          top: "55%", left: "50%",
+          width: s.w * 1.8,
+          height: s.h * 0.9,
+          background: "radial-gradient(ellipse, rgba(239,74,255,0.18) 0%, rgba(112,72,255,0.1) 40%, transparent 70%)",
+          top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 0,
           animationDelay: "0.6s",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute rounded-full blur-3xl"
+        style={{
+          width: s.w * 1.2,
+          height: s.h * 0.5,
+          background: "radial-gradient(ellipse, rgba(0,212,255,0.15) 0%, transparent 70%)",
+          bottom: "10%", left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 0,
         }}
       />
 
@@ -57,12 +69,12 @@ export function PremiumCanAI({
       {showPing && (
         <>
           <div
-            className="pointer-events-none absolute rounded-full border border-blue-400/25 animate-ping-ring will-change-transform"
-            style={{ width: s.w * 1.6, height: s.w * 1.6, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }}
+            className="pointer-events-none absolute rounded-full border-2 border-blue-400/30 animate-ping-ring will-change-transform"
+            style={{ width: s.w * 1.8, height: s.w * 1.8, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }}
           />
           <div
-            className="pointer-events-none absolute rounded-full border border-fuchsia-400/15 animate-ping-ring will-change-transform"
-            style={{ width: s.w * 1.3, height: s.w * 1.3, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0, animationDelay: "0.8s" }}
+            className="pointer-events-none absolute rounded-full border border-fuchsia-400/20 animate-ping-ring will-change-transform"
+            style={{ width: s.w * 1.4, height: s.w * 1.4, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0, animationDelay: "0.8s" }}
           />
         </>
       )}
@@ -72,50 +84,68 @@ export function PremiumCanAI({
         className="relative animate-can-float will-change-transform"
         style={{ width: s.w, height: s.h, zIndex: 1 }}
       >
-        {/* Bottom reflection */}
+        {/* Dark background behind can to hide white edges */}
         <div
-          className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 rounded-full blur-xl"
+          className="absolute inset-0 rounded-2xl"
           style={{
-            width: s.w * 0.6,
-            height: 16,
-            background: "rgba(61,127,255,0.4)",
+            background: "linear-gradient(180deg, rgba(3,5,15,0.95) 0%, rgba(6,10,30,0.9) 50%, rgba(3,5,15,0.95) 100%)",
+            transform: "scale(0.95)",
+            zIndex: -1,
           }}
         />
+
+        {/* Bottom reflection/glow */}
+        <div
+          className="absolute bottom-[-12px] left-1/2 -translate-x-1/2 rounded-full blur-2xl"
+          style={{
+            width: s.w * 0.7,
+            height: 24,
+            background: "radial-gradient(ellipse, rgba(61,127,255,0.6) 0%, rgba(112,72,255,0.3) 50%, transparent 100%)",
+          }}
+        />
+
+        {/* Floating particles around can */}
+        <div className="absolute -top-4 -right-4 w-2 h-2 rounded-full bg-cyan-400/60 animate-pulse" />
+        <div className="absolute top-1/4 -left-6 w-1.5 h-1.5 rounded-full bg-blue-400/50 animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <div className="absolute bottom-1/3 -right-8 w-2 h-2 rounded-full bg-fuchsia-400/50 animate-pulse" style={{ animationDelay: "1s" }} />
 
         <Image
           src="/nexacola-can.png"
           alt="NEXACOLA AI Energy Can"
           fill
-          className="object-contain"
+          className="object-contain drop-shadow-2xl"
           style={{
-            mixBlendMode: "multiply",
             filter: `
-              drop-shadow(0 0 ${glowSize}px rgba(61,127,255,0.5))
-              drop-shadow(0 0 ${glowSize2}px rgba(112,72,255,0.25))
-              brightness(1.06) contrast(1.04) saturate(1.08)
+              drop-shadow(0 0 ${glowSize}px rgba(61,127,255,0.6))
+              drop-shadow(0 0 ${glowSize2}px rgba(112,72,255,0.4))
+              drop-shadow(0 20px 40px rgba(0,0,0,0.5))
+              brightness(1.1) contrast(1.08) saturate(1.15)
             `,
           }}
           priority
-          sizes="(max-width: 768px) 160px, 240px"
+          sizes="(max-width: 768px) 200px, 400px"
         />
       </div>
 
       {/* ── Power bar ── */}
-      <div className={`mt-4 ${s.barW} space-y-1.5 relative z-10`}>
+      <div className={`mt-6 ${s.barW} space-y-2 relative z-10`}>
         <div className="flex items-center justify-between px-0.5">
-          <span className={`${s.labelSize} uppercase tracking-[0.22em] text-slate-400`}>
+          <span className={`${s.labelSize} uppercase tracking-[0.22em] text-slate-400 font-medium`}>
             Power
           </span>
           <span className={`${s.labelSize} font-bold text-cyan-300`}>{power}%</span>
         </div>
-        <div className="power-bar-track">
-          <div className="power-bar-fill" style={{ width: `${power}%` }} />
+        <div className="power-bar-track h-2 rounded-full bg-white/10 overflow-hidden">
+          <div 
+            className="h-full rounded-full bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-300 shadow-[0_0_10px_rgba(34,211,238,0.5)]" 
+            style={{ width: `${power}%` }} 
+          />
         </div>
       </div>
 
       {/* ── Label ── */}
       {label && (
-        <p className={`mt-2 text-center ${s.labelSize} uppercase tracking-[0.28em] text-slate-500 relative z-10`}>
+        <p className={`mt-3 text-center ${s.labelSize} uppercase tracking-[0.28em] text-slate-500 relative z-10 font-medium`}>
           {label}
         </p>
       )}
