@@ -8,7 +8,7 @@ export default function WithdrawalPage() {
         <Card className="lg:col-span-2">
           <SectionTitle title="Nuova richiesta prelievo" subtitle="Solo UI + struttura" />
           <div className="space-y-3">
-            <div className="rounded-xl bg-black/20 px-4 py-3 text-sm text-slate-300">Saldo disponibile: 1280.00 BZT</div>
+            <div className="rounded-xl bg-black/20 px-4 py-3 text-sm text-slate-300">Saldo disponibile: 1280.00 NXF</div>
             <input className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3" placeholder="Importo" />
             <button className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 font-semibold">Invia richiesta</button>
           </div>

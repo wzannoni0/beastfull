@@ -1,74 +1,135 @@
 import Link from "next/link";
 import { LEVELS } from "@/lib/levels";
+import { PremiumCanAI } from "@/components/premium-can-ai";
+import { Zap, Users, Award, TrendingUp } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 py-8 sm:px-8">
-      <header className="glass-card neon-border sticky top-4 z-30 mb-8 flex items-center justify-between rounded-2xl px-5 py-4">
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-blue-300">Beastfull</p>
-          <p className="font-semibold">Power your Beast</p>
+    <div className="premium-page premium-page-animated mx-auto flex w-full max-w-[1500px] flex-1 flex-col px-5 py-6 sm:px-8 lg:px-10">
+
+      {/* ── Top navbar ── */}
+      <header className="glass-card neon-border sticky top-4 z-30 mb-10 flex items-center justify-between rounded-[1.8rem] px-5 py-3.5">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-500 to-fuchsia-600 flex items-center justify-center shadow-[0_0_16px_rgba(90,90,255,0.45)] animate-pulse-glow">
+            <Zap className="h-4 w-4 text-white" />
+          </div>
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.28em] text-blue-300">NEXAFORCE Protocol</p>
+            <p className="text-sm font-black tracking-tight leading-none">Charge your Force</p>
+          </div>
         </div>
-        <div className="flex gap-3 text-sm">
-          <Link href="/login" className="rounded-xl border border-white/20 px-4 py-2 hover:bg-white/5">
-            Login
-          </Link>
-          <Link href="/register" className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-2 font-semibold">
-            Registrati
-          </Link>
+        <div className="flex gap-2 text-sm">
+          <Link href="/login" className="btn-ghost text-sm">Login</Link>
+          <Link href="/register" className="btn-primary text-sm">Registrati ⚡</Link>
         </div>
       </header>
 
-      <main className="space-y-8">
-        <section className="glass-card grid gap-8 rounded-3xl p-8 lg:grid-cols-2 lg:p-12">
-          <div className="space-y-5">
-            <p className="text-xs uppercase tracking-[0.25em] text-blue-300">BEASTCOLA • BZT</p>
-            <h1 className="text-4xl font-black leading-tight sm:text-5xl">
-              Power your Beast. <br /> Grow your Can. <br /> Rule your Team.
-            </h1>
-            <p className="max-w-xl text-slate-300">
-              Join Beastfull and build your daily progression through team energy, consistency, and level growth.
+      <main className="space-y-8 pb-12">
+
+        {/* ══ HERO SECTION ══ */}
+        <section className="glass-card real-ai-bg real-ai-bg-home grid gap-10 overflow-hidden rounded-[2.2rem] p-8 lg:grid-cols-2 lg:p-14 relative">
+          {/* Ambient orbs */}
+          <div className="pointer-events-none absolute left-0 top-0 h-80 w-80 rounded-full bg-blue-600/12 blur-3xl" />
+          <div className="pointer-events-none absolute right-0 bottom-0 h-64 w-64 rounded-full bg-fuchsia-600/10 blur-3xl" />
+          <div className="pointer-events-none absolute right-1/3 top-1/4 h-96 w-96 rounded-full bg-purple-600/8 blur-3xl" />
+
+          {/* Left copy */}
+          <div className="relative z-10 flex flex-col justify-center space-y-6 animate-slide-left">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.30em] text-blue-300 mb-3 flex items-center gap-2">
+                <span className="inline-block h-px w-8 bg-gradient-to-r from-blue-400 to-transparent" />
+                NEXACOLA • NXF • UPGRADE CORE
+              </p>
+              <h1 className="text-5xl font-black leading-[0.92] tracking-tight sm:text-6xl xl:text-7xl">
+                Charge your<br />
+                <span className="gradient-text text-glow">Force.</span> Scale<br />
+                your Team.
+              </h1>
+            </div>
+            <p className="max-w-md text-slate-300 text-base leading-relaxed">
+              Una piattaforma premium con estetica futuristica: progressione livello, can evolution e controllo team in tempo reale.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/register" className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 font-semibold">
-                Charge your Beast
+              <Link href="/register" className="btn-primary">
+                ⚡ Charge your Force
               </Link>
-              <Link href="/dashboard" className="rounded-xl border border-white/20 px-5 py-3">
+              <Link href="/dashboard" className="btn-ghost">
                 View Demo Dashboard
               </Link>
             </div>
-          </div>
-          <div className="glass-card rounded-2xl p-6">
-            <p className="mb-2 text-sm text-slate-300">Your can is evolving</p>
-            <div className="mx-auto h-64 w-40 rounded-[2rem] border border-blue-300/40 bg-gradient-to-b from-blue-400/30 via-violet-500/30 to-slate-900 p-2 shadow-[0_0_60px_rgba(106,114,255,0.35)]">
-              <div className="h-full w-full rounded-[1.6rem] border border-white/20 bg-gradient-to-t from-blue-500/35 to-transparent" />
+
+            {/* Stats */}
+            <div className="grid max-w-sm grid-cols-3 gap-3">
+              {[
+                { icon: Users,      v: "12.4k", l: "Utenti attivi",  c: "text-white" },
+                { icon: TrendingUp, v: "+87%",  l: "Team pulse",     c: "text-cyan-200" },
+                { icon: Award,      v: "266.7", l: "Reward/day",     c: "text-fuchsia-200" },
+              ].map(({ icon: Icon, v, l, c }) => (
+                <div key={l} className="stat-card gradient-border-animated">
+                  <Icon className="h-4 w-4 text-slate-500 mx-auto mb-1" />
+                  <p className={`text-xl font-black ${c}`}>{v}</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">{l}</p>
+                </div>
+              ))}
             </div>
-            <p className="mt-4 text-center text-xs uppercase tracking-[0.2em] text-slate-400">Legendary Beast Form</p>
+          </div>
+
+          {/* Right: real can */}
+          <div className="relative z-10 flex flex-col items-center justify-center gap-5 animate-slide-right">
+            <PremiumCanAI label="NEXACOLA AI — Legendary Form" power={82} size="lg" showPing />
           </div>
         </section>
 
-        <section className="grid gap-4 md:grid-cols-3">
+        {/* ══ FEATURES ══ */}
+        <section className="grid gap-4 md:grid-cols-3 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           {[
-            "Daily claim una volta ogni 24h",
-            "Referral obbligatorio con sponsor",
-            "Progressione livelli con downgrade automatico",
-          ].map((f) => (
-            <article key={f} className="glass-card rounded-2xl p-5 text-sm text-slate-300">
-              {f}
+            { icon: "✦", t: "Esperienza visual cyber",   d: "Effetti premium glassmorphism, glow dinamico e animazioni fluide su ogni schermata.", color: "blue" },
+            { icon: "◈", t: "Referral network profondo",  d: "Crescita a profondità multiple con reward automatici e tracciamento team real-time.", color: "purple" },
+            { icon: "⬡", t: "Progressione 8 livelli",    d: "Da Rookie Force a Legendary Force con reward crescenti e can evolution unica.", color: "pink" },
+          ].map((f, i) => (
+            <article
+              key={f.t}
+              className={`glass-card glass-card-hover rounded-[1.6rem] p-6 relative overflow-hidden animate-fade-in-up ${f.color === "blue" ? "card-glow-blue" : f.color === "purple" ? "card-glow-purple" : "card-glow-pink"}`}
+              style={{ animationDelay: `${0.25 + i * 0.1}s` }}
+            >
+              <div className={`absolute -right-8 -top-8 h-28 w-28 rounded-full ${f.color === "blue" ? "bg-blue-500/8" : f.color === "purple" ? "bg-purple-500/8" : "bg-pink-500/8"} blur-2xl pointer-events-none`} />
+              <span className="text-2xl mb-3 block gradient-text">{f.icon}</span>
+              <h3 className="text-base font-black text-white">{f.t}</h3>
+              <p className="mt-2 text-sm text-slate-400 leading-relaxed">{f.d}</p>
+              <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${f.color === "blue" ? "via-blue-400/30" : f.color === "purple" ? "via-purple-400/30" : "via-pink-400/30"} to-transparent`} />
             </article>
           ))}
         </section>
 
-        <section className="glass-card rounded-3xl p-8">
-          <h2 className="mb-4 text-2xl font-bold">Sistema livelli (8 step)</h2>
-          <div className="grid gap-3 md:grid-cols-2">
-            {LEVELS.map((l) => (
-              <div key={l.id} className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm">
-                <p className="font-semibold">
-                  Lv.{l.id} — {l.name}
-                </p>
-                <p className="text-slate-300">Reward: {l.rewardPerDay.toFixed(2)} BZT/day</p>
-                <p className="text-slate-400">Min saldo: {l.minBalance} BZT</p>
+        {/* ══ LEVELS TABLE ══ */}
+        <section className="glass-card rounded-[2rem] p-8 animate-fade-in-up relative overflow-hidden" style={{ animationDelay: "0.35s" }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none" />
+          <div className="mb-6 flex items-end justify-between relative z-10">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.28em] text-blue-300 mb-1 flex items-center gap-2">
+                <span className="inline-block h-px w-6 bg-gradient-to-r from-blue-400 to-transparent" />
+                Progression System
+              </p>
+              <h2 className="text-3xl font-black tracking-tight">Sistema livelli <span className="gradient-text">8 step</span></h2>
+            </div>
+            <Link href="/register" className="btn-primary text-sm hidden sm:flex">
+              Start Now →
+            </Link>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4 relative z-10">
+            {LEVELS.map((l, i) => (
+              <div
+                key={l.id}
+                className="glass-card-hover rounded-2xl border border-white/8 bg-black/28 p-4 text-sm relative overflow-hidden animate-fade-in-up"
+                style={{ animationDelay: `${0.4 + i * 0.05}s` }}
+              >
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-300/25 to-transparent" />
+                <div className="flex items-center justify-between mb-2">
+                  <span className="badge badge-blue">Lv.{l.id}</span>
+                </div>
+                <p className="font-bold text-white">{l.name}</p>
+                <p className="mt-1.5 text-cyan-300 font-semibold">{l.rewardPerDay.toFixed(2)} <span className="text-cyan-400/60 text-xs">NXF/day</span></p>
+                <p className="text-slate-500 text-xs mt-0.5">Min: {l.minBalance} NXF</p>
               </div>
             ))}
           </div>

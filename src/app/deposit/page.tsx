@@ -8,7 +8,7 @@ export default function DepositPage() {
         <Card className="lg:col-span-2">
           <SectionTitle title="Nuova richiesta deposito" subtitle="UI database-ready" />
           <div className="space-y-3">
-            <input className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3" placeholder="Importo BZT" />
+            <input className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3" placeholder="Importo NXF" />
             <select className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3">
               <option>Metodo deposito</option>
               <option>Crypto Wallet</option>

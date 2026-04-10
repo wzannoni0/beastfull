@@ -76,7 +76,7 @@ export async function POST(request: Request) {
         },
         notifications: {
           create: {
-            title: "Welcome to Beastfull",
+            title: "Welcome to NEXAFORCE",
             message: `Sei entrato nel team di ${sponsorProfile.user.username}`,
           },
         },

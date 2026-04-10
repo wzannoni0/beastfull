@@ -19,7 +19,7 @@ export const levelState = computeCurrentLevel({
 });
 
 export const recentActivity = [
-  "Claim giornaliero: +1.45 BZT",
+  "Claim giornaliero: +1.45 NXF",
   "Nuovo membro diretto: @nova.z",
   "Bonus streak 7 giorni sbloccato",
   "Upgrade can state: Neon Can",

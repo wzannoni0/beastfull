@@ -3,6 +3,8 @@ import { AppShell } from "@/components/app-shell";
 import { Card, SectionTitle } from "@/components/premium";
 import { getServerSession } from "@/lib/server-session";
 
+export const dynamic = "force-dynamic";
+
 const users = [
   { username: "beast.alpha", level: 4, balance: 1280, status: "Active" },
   { username: "nova.z", level: 2, balance: 180, status: "Active" },
@@ -49,7 +51,7 @@ export default async function AdminPage() {
             <div key={u.username} className="grid grid-cols-4 rounded-lg bg-black/20 px-3 py-2">
               <span>@{u.username}</span>
               <span>Lv. {u.level}</span>
-              <span>{u.balance} BZT</span>
+              <span>{u.balance} NXF</span>
               <span>{u.status}</span>
             </div>
           ))}

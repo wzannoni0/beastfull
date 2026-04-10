@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastProvider } from "@/components/toast-provider";
+import { StarsBackground } from "@/components/stars-background";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Beastfull | Power your Beast",
+  title: "NEXAFORCE | Charge your Force",
   description:
-    "Beastfull è una piattaforma premium gamificata con progressione livelli, team energy e reward giornalieri BZT.",
+    "NEXAFORCE è una piattaforma premium gamificata con progressione livelli, team energy e reward giornalieri NXF.",
 };
 
 export default function RootLayout({
@@ -28,7 +30,7 @@ export default function RootLayout({
       lang="it"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col relative"><StarsBackground /><ToastProvider>{children}</ToastProvider></body>
     </html>
   );
 }

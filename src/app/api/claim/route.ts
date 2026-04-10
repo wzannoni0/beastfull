@@ -68,7 +68,7 @@ export async function POST(request: Request) {
         data: {
           userId,
           title: "Claim completato",
-          message: `Hai ricevuto ${amount.toFixed(2)} BZT`,
+          message: `Hai ricevuto ${amount.toFixed(2)} NXF`,
         },
       }),
     ]);
