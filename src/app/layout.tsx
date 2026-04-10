@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NEXAFORCE | Charge your Force",
+  title: "MONSTER ENERGY | Unleash the Beast",
   description:
-    "NEXAFORCE è una piattaforma premium gamificata con progressione livelli, team energy e reward giornalieri NXF.",
+    "Monster Energy - Piattaforma premium gamificata con progressione livelli, team energy e reward giornalieri.",
 };
 
 export default function RootLayout({

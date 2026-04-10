@@ -15,6 +15,8 @@
   --pink: #ef4aff;
   --gold: #f5c842;
   --cyan: #00d4ff;
+  --green: #22c55e;
+  --lime: #84cc16;
 
   /* Sidebar width */
   --sidebar-w: 17rem;
@@ -131,9 +133,9 @@ body {
   position: relative;
   overflow-x: hidden;
   background:
-    radial-gradient(1000px 500px at 8% -12%,  rgba(61, 127, 255, 0.18), transparent 60%),
-    radial-gradient(800px 400px at 94% 6%,   rgba(239, 74, 255, 0.12), transparent 55%),
-    radial-gradient(900px 600px at 48% 102%, rgba(112, 72, 255, 0.14), transparent 66%),
+    radial-gradient(1000px 500px at 8% -12%,  rgba(34,197,94,0.18), transparent 60%),
+    radial-gradient(800px 400px at 94% 6%,   rgba(132,204,22,0.12), transparent 55%),
+    radial-gradient(900px 600px at 48% 102%, rgba(22,163,74,0.14), transparent 66%),
     linear-gradient(168deg, #020409 0%, #060c1e 46%, #030910 100%);
   background-size: cover;
   background-position: center center;
@@ -406,10 +408,10 @@ body::after {
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.02em;
-  background: linear-gradient(135deg, #3d6fff 0%, #5b3eff 50%, #9b3dff 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #84cc16 100%);
   box-shadow:
-    0 0 28px rgba(80, 80, 255, 0.38),
-    0 4px 16px rgba(60, 80, 255, 0.28);
+    0 0 28px rgba(34, 197, 94, 0.38),
+    0 4px 16px rgba(34, 197, 94, 0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -426,9 +428,9 @@ body::after {
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow:
-    0 0 40px rgba(90, 90, 255, 0.52),
-    0 6px 24px rgba(60, 80, 255, 0.36),
-    0 0 80px rgba(61, 127, 255, 0.2);
+    0 0 40px rgba(34, 197, 94, 0.52),
+    0 6px 24px rgba(34, 197, 94, 0.36),
+    0 0 80px rgba(34, 197, 94, 0.2);
   filter: brightness(1.08);
 }
 .btn-primary:active {
