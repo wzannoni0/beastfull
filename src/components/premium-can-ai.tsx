@@ -84,13 +84,22 @@ export function PremiumCanAI({
         className="relative animate-can-float will-change-transform"
         style={{ width: s.w, height: s.h, zIndex: 1 }}
       >
-        {/* Dark background behind can to hide white edges */}
+        {/* Dark container with dark edges to mask white background */}
         <div
-          className="absolute inset-0 rounded-2xl"
+          className="absolute inset-0"
           style={{
-            background: "linear-gradient(180deg, rgba(3,5,15,0.95) 0%, rgba(6,10,30,0.9) 50%, rgba(3,5,15,0.95) 100%)",
-            transform: "scale(0.95)",
-            zIndex: -1,
+            background: "linear-gradient(90deg, #03050f 0%, #050a18 20%, #03050f 80%, #03050f 100%)",
+            borderRadius: "2rem",
+          }}
+        />
+
+        {/* Inner dark overlay on edges to mask white */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(circle at center, transparent 35%, #03050f 65%)",
+            borderRadius: "2rem",
+            zIndex: 1,
           }}
         />
 
@@ -113,17 +122,25 @@ export function PremiumCanAI({
           src="/nexacola-can.png"
           alt="NEXACOLA AI Energy Can"
           fill
-          className="object-contain drop-shadow-2xl"
+          className="object-contain"
           style={{
             filter: `
-              drop-shadow(0 0 ${glowSize}px rgba(61,127,255,0.6))
-              drop-shadow(0 0 ${glowSize2}px rgba(112,72,255,0.4))
-              drop-shadow(0 20px 40px rgba(0,0,0,0.5))
-              brightness(1.1) contrast(1.08) saturate(1.15)
+              drop-shadow(0 0 ${glowSize}px rgba(61,127,255,0.5))
+              drop-shadow(0 0 ${glowSize2}px rgba(112,72,255,0.3))
+              brightness(1.05) contrast(1.02)
             `,
           }}
           priority
           sizes="(max-width: 768px) 200px, 400px"
+        />
+
+        {/* Outer dark border to further mask any remaining white */}
+        <div
+          className="absolute -inset-1 rounded-[2.5rem] pointer-events-none"
+          style={{
+            boxShadow: "inset 0 0 20px #03050f, 0 0 30px rgba(3,5,15,0.8)",
+            zIndex: 3,
+          }}
         />
       </div>
 
