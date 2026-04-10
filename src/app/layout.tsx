@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI CORE | Global Intelligence",
+  title: "AI CORE | Global Intelligence Network",
   description:
-    "AI CORE - Piattaforma premium gamificata con progressione livelli, intelligenza artificiale e team energy.",
+    "AI CORE - Piattaforma premium con intelligenza artificiale, progressione livelli e controllo team globale.",
 };
 
 export default function RootLayout({
