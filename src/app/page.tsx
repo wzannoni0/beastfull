@@ -10,12 +10,12 @@ export default function Home() {
       {/* ── Top navbar ── */}
       <header className="glass-card neon-border sticky top-4 z-30 mb-10 flex items-center justify-between rounded-[1.8rem] px-5 py-3.5">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-green-500 to-lime-600 flex items-center justify-center shadow-[0_0_16px_rgba(34,197,94,0.45)] animate-pulse-glow">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-[0_0_16px_rgba(90,90,255,0.45)] animate-pulse-glow">
             <Zap className="h-4 w-4 text-white" />
           </div>
           <div>
-            <p className="text-[9px] uppercase tracking-[0.28em] text-green-300">MONSTER ENERGY Protocol</p>
-            <p className="text-sm font-black tracking-tight leading-none">Unleash the Beast</p>
+            <p className="text-[9px] uppercase tracking-[0.28em] text-blue-300">AI CORE Protocol</p>
+            <p className="text-sm font-black tracking-tight leading-none">Global Intelligence</p>
           </div>
         </div>
         <div className="flex gap-2 text-sm">
@@ -36,22 +36,22 @@ export default function Home() {
           {/* Left copy */}
           <div className="relative z-10 flex flex-col justify-center space-y-6 animate-slide-left">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.30em] text-green-300 mb-3 flex items-center gap-2">
-                <span className="inline-block h-px w-8 bg-gradient-to-r from-green-400 to-transparent" />
-                MONSTER • MGE • UPGRADE CORE
+              <p className="text-[10px] uppercase tracking-[0.30em] text-blue-300 mb-3 flex items-center gap-2">
+                <span className="inline-block h-px w-8 bg-gradient-to-r from-blue-400 to-transparent" />
+                AI CORE • GLOBAL NETWORK
               </p>
               <h1 className="text-5xl font-black leading-[0.92] tracking-tight sm:text-6xl xl:text-7xl">
-                Unleash your<br />
-                <span className="text-green-400 text-glow">Beast.</span> Dominate<br />
+                Connect to<br />
+                <span className="gradient-text text-glow">AI Core.</span> Sync<br />
                 your Team.
               </h1>
             </div>
             <p className="max-w-md text-slate-300 text-base leading-relaxed">
-              Una piattaforma premium con estetica Monster Energy: progressione livelli, can evolution e controllo team in tempo reale.
+              Una piattaforma premium con intelligenza artificiale: progressione livelli, mappamondo AI e controllo team in tempo reale.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/register" className="btn-primary bg-gradient-to-r from-green-600 to-lime-500">
-                ⚡ Unleash the Beast
+              <Link href="/register" className="btn-primary">
+                ⚡ Connect to AI Core
               </Link>
               <Link href="/dashboard" className="btn-ghost">
                 View Demo Dashboard
@@ -62,8 +62,8 @@ export default function Home() {
             <div className="grid max-w-sm grid-cols-3 gap-3">
               {[
                 { icon: Users,      v: "12.4k", l: "Utenti attivi",  c: "text-white" },
-                { icon: TrendingUp, v: "+87%",  l: "Team pulse",     c: "text-green-300" },
-                { icon: Award,      v: "266.7", l: "Reward/day",     c: "text-lime-300" },
+                { icon: TrendingUp, v: "+87%",  l: "Team pulse",     c: "text-cyan-200" },
+                { icon: Award,      v: "266.7", l: "Reward/day",     c: "text-violet-200" },
               ].map(({ icon: Icon, v, l, c }) => (
                 <div key={l} className="stat-card gradient-border-animated">
                   <Icon className="h-4 w-4 text-slate-500 mx-auto mb-1" />
@@ -76,7 +76,7 @@ export default function Home() {
 
           {/* Right: real can */}
           <div className="relative z-10 flex flex-col items-center justify-center gap-5 animate-slide-right">
-            <PremiumCanAI label="MONSTER ENERGY — Unleash the Beast" power={82} size="lg" showPing />
+            <PremiumCanAI label="AI CORE — Global Network" power={82} size="lg" showPing />
           </div>
         </section>
 

@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MONSTER ENERGY | Unleash the Beast",
+  title: "AI CORE | Global Intelligence",
   description:
-    "Monster Energy - Piattaforma premium gamificata con progressione livelli, team energy e reward giornalieri.",
+    "AI CORE - Piattaforma premium gamificata con progressione livelli, intelligenza artificiale e team energy.",
 };
 
 export default function RootLayout({
