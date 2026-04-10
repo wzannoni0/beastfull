@@ -52,7 +52,6 @@ export default function RegisterPage() {
               <PremiumCanAI label="REGISTER LUNA CORE" power={82} size="lg" />
             </div>
           </div>
-          </div>
 
           <div className="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-slate-300">
             <p className="font-semibold text-white">Flow premium:</p>
@@ -65,12 +64,12 @@ export default function RegisterPage() {
         </section>
 
         <section className="glass-card glass-card-hover w-full rounded-[2rem] p-6 sm:p-8 animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-          <p className="text-xs uppercase tracking-[0.2em] text-blue-300">Join NEXAFORCE</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight">Create your Beast</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-blue-300">Join LUNA CORE</p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight">Create your Identity</h1>
           <p className="mt-1 text-sm text-slate-300">Referral obbligatorio per entrare.</p>
 
           <div className="my-6 lg:hidden">
-            <PremiumCanAI label="MOBILE REGISTER AI" power={74} size="sm" />
+            <PremiumCanAI label="MOBILE REGISTER LUNA" power={74} size="sm" />
           </div>
 
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
