@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 type PremiumCanAIProps = {
   label?: string;
   power?: number;
@@ -17,25 +15,23 @@ const sizeMap = {
 };
 
 export function PremiumCanAI({
-  label = "AI CORE",
+  label = "LUNA CORE",
   power = 72,
   size = "lg",
   showPing = false,
 }: PremiumCanAIProps) {
   const s = sizeMap[size];
-  const glowSize = size === "xl" ? 25 : size === "lg" ? 20 : size === "md" ? 15 : 10;
-  const glowSize2 = size === "xl" ? 50 : size === "lg" ? 40 : size === "md" ? 28 : 18;
 
   return (
     <div className="relative mx-auto select-none flex flex-col items-center">
 
-      {/* ── Ambient glow layers - AI cyan/blue ── */}
+      {/* ── Ambient glow layers - Moon silver/blue ── */}
       <div
         className="pointer-events-none absolute rounded-full animate-can-glow will-change-transform"
         style={{
           width: s.w * 1.6,
           height: s.h * 1.6,
-          background: "radial-gradient(circle, rgba(0,212,255,0.45) 0%, rgba(61,127,255,0.25) 40%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(200,200,220,0.4) 0%, rgba(100,120,180,0.25) 40%, transparent 70%)",
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 0,
@@ -46,7 +42,7 @@ export function PremiumCanAI({
         style={{
           width: s.w * 1.2,
           height: s.h * 1.2,
-          background: "radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(61,127,255,0.12) 40%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(150,170,200,0.2) 0%, rgba(80,100,150,0.12) 40%, transparent 70%)",
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 0,
@@ -58,7 +54,7 @@ export function PremiumCanAI({
         style={{
           width: s.w * 0.7,
           height: s.h * 0.7,
-          background: "radial-gradient(circle, rgba(34,211,238,0.25) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(180,190,210,0.2) 0%, transparent 70%)",
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 0,
@@ -69,17 +65,17 @@ export function PremiumCanAI({
       {showPing && (
         <>
           <div
-            className="pointer-events-none absolute rounded-full border-2 border-cyan-400/40 animate-ping-ring will-change-transform"
+            className="pointer-events-none absolute rounded-full border-2 border-slate-400/40 animate-ping-ring will-change-transform"
             style={{ width: s.w * 1.3, height: s.w * 1.3, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }}
           />
           <div
-            className="pointer-events-none absolute rounded-full border border-blue-400/25 animate-ping-ring will-change-transform"
+            className="pointer-events-none absolute rounded-full border border-slate-300/25 animate-ping-ring will-change-transform"
             style={{ width: s.w * 1.05, height: s.w * 1.05, top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0, animationDelay: "0.8s" }}
           />
         </>
       )}
 
-      {/* ── Real Globe / Mappamondo ── */}
+      {/* ── 3D Moon ── */}
       <div
         className="relative animate-can-float will-change-transform"
         style={{ 
@@ -93,54 +89,69 @@ export function PremiumCanAI({
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: "#03050f",
-            boxShadow: "inset 0 0 30px rgba(0,212,255,0.1)",
+            background: "#050510",
+            boxShadow: "inset 0 0 30px rgba(150,150,180,0.1)",
           }}
         />
 
-        {/* Real globe image */}
+        {/* Moon sphere with 3D effect */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 rounded-full"
           style={{
-            transform: "rotateY(-8deg) rotateX(5deg)",
+            background: "radial-gradient(circle at 30% 25%, #d4d4dc 0%, #a0a0b0 20%, #606070 50%, #303040 80%, #151520 100%)",
+            boxShadow: `
+              inset -${s.w * 0.12}px 0 ${s.w * 0.25}px rgba(0,0,0,0.6),
+              inset ${s.w * 0.08}px ${s.w * 0.08}px ${s.w * 0.12}px rgba(255,255,255,0.15),
+              0 0 ${s.w * 0.08}px rgba(200,200,220,0.3)
+            `,
+            transform: "rotateY(-12deg) rotateX(8deg)",
             transformStyle: "preserve-3d",
-            borderRadius: "50%",
-            overflow: "hidden",
           }}
         >
-          <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solarsystemscope_texture_8k_earth_daymap.jpg/1200px-Solarsystemscope_texture_8k_earth_daymap.jpg"
-            alt="Real Globe Earth"
-            fill
-            className="object-contain"
+          {/* Moon craters */}
+          <div className="absolute inset-0" style={{ opacity: 0.4 }}>
+            {/* Large craters */}
+            <div className="absolute rounded-full bg-black/20" style={{ top: '20%', left: '25%', width: s.w * 0.15, height: s.w * 0.15 }} />
+            <div className="absolute rounded-full bg-black/25" style={{ top: '45%', left: '60%', width: s.w * 0.2, height: s.w * 0.2 }} />
+            <div className="absolute rounded-full bg-black/15" style={{ top: '65%', left: '30%', width: s.w * 0.12, height: s.w * 0.12 }} />
+            {/* Medium craters */}
+            <div className="absolute rounded-full bg-black/20" style={{ top: '30%', left: '70%', width: s.w * 0.08, height: s.w * 0.08 }} />
+            <div className="absolute rounded-full bg-black/15" style={{ top: '70%', left: '55%', width: s.w * 0.1, height: s.w * 0.1 }} />
+            <div className="absolute rounded-full bg-black/20" style={{ top: '15%', left: '50%', width: s.w * 0.07, height: s.w * 0.07 }} />
+          </div>
+
+          {/* Moon dark side shadow */}
+          <div
+            className="absolute inset-0 rounded-full"
             style={{
-              filter: `
-                drop-shadow(0 0 ${glowSize}px rgba(0,212,255,0.5))
-                drop-shadow(0 0 ${glowSize2}px rgba(61,127,255,0.3))
-                drop-shadow(0 15px 30px rgba(0,0,0,0.6))
-                brightness(1.08) contrast(1.05)
-              `,
+              background: "linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.5) 70%)",
             }}
-            priority
-            sizes="(max-width: 768px) 180px, 350px"
+          />
+
+          {/* Highlight on moon edge */}
+          <div
+            className="absolute top-[15%] left-[20%] w-[30%] h-[20%] rounded-full"
+            style={{
+              background: "radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%)",
+            }}
           />
         </div>
 
-        {/* Edge mask to remove white borders */}
+        {/* Moon orbit ring */}
         <div
-          className="absolute inset-0 rounded-full pointer-events-none"
+          className="absolute inset-0 rounded-full border border-slate-400/20"
           style={{
-            background: "radial-gradient(circle at center, transparent 35%, #03050f 68%)",
-            zIndex: 2,
+            animation: "orbit-ring 15s linear infinite",
+            transform: "rotateX(70deg)",
           }}
         />
 
-        {/* Orbiting ring */}
+        {/* Edge mask */}
         <div
-          className="absolute inset-0 rounded-full border border-cyan-400/25"
+          className="absolute inset-0 rounded-full pointer-events-none"
           style={{
-            animation: "orbit-ring 10s linear infinite",
-            transform: "rotateX(60deg)",
+            background: "radial-gradient(circle at center, transparent 38%, #050510 68%)",
+            zIndex: 2,
           }}
         />
 
@@ -150,14 +161,14 @@ export function PremiumCanAI({
           style={{
             width: s.w * 0.5,
             height: 14,
-            background: "radial-gradient(ellipse, rgba(0,212,255,0.5) 0%, rgba(61,127,255,0.25) 50%, transparent 100%)",
+            background: "radial-gradient(ellipse, rgba(180,180,200,0.4) 0%, rgba(100,100,120,0.2) 50%, transparent 100%)",
           }}
         />
 
-        {/* Floating particles */}
-        <div className="absolute -top-2 -right-2 w-2 h-2 rounded-full bg-cyan-400/70 animate-pulse" />
-        <div className="absolute top-1/4 -left-4 w-1.5 h-1.5 rounded-full bg-blue-400/60 animate-pulse" style={{ animationDelay: "0.5s" }} />
-        <div className="absolute bottom-1/4 -right-6 w-2 h-2 rounded-full bg-violet-400/50 animate-pulse" style={{ animationDelay: "1s" }} />
+        {/* Floating particles - moon dust */}
+        <div className="absolute -top-2 -right-2 w-2 h-2 rounded-full bg-slate-300/60 animate-pulse" />
+        <div className="absolute top-1/4 -left-4 w-1.5 h-1.5 rounded-full bg-slate-400/50 animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <div className="absolute bottom-1/4 -right-6 w-2 h-2 rounded-full bg-slate-300/40 animate-pulse" style={{ animationDelay: "1s" }} />
       </div>
 
       {/* ── Power bar ── */}
@@ -166,11 +177,11 @@ export function PremiumCanAI({
           <span className={`${s.labelSize} uppercase tracking-[0.22em] text-slate-400 font-medium`}>
             Power
           </span>
-          <span className={`${s.labelSize} font-bold text-cyan-400`}>{power}%</span>
+          <span className={`${s.labelSize} font-bold text-slate-300`}>{power}%</span>
         </div>
         <div className="power-bar-track h-2 rounded-full bg-white/10 overflow-hidden">
           <div 
-            className="h-full rounded-full bg-gradient-to-r from-cyan-600 via-blue-400 to-cyan-400 shadow-[0_0_10px_rgba(0,212,255,0.5)]" 
+            className="h-full rounded-full bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 shadow-[0_0_10px_rgba(180,180,200,0.3)]" 
             style={{ width: `${power}%` }} 
           />
         </div>

@@ -41,9 +41,9 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-5xl">
         {/* ── Top brand strip ── */}
         <div className="mb-8 flex items-center justify-center gap-2 animate-fade-in">
-          <span className="text-[10px] uppercase tracking-[0.32em] text-blue-300/70">NEXAFORCE Protocol</span>
+          <span className="text-[10px] uppercase tracking-[0.32em] text-blue-300/70">LUNA CORE Protocol</span>
           <span className="h-1 w-1 rounded-full bg-blue-400/50" />
-          <span className="text-[10px] uppercase tracking-[0.32em] text-fuchsia-300/70">NEXACOLA AI</span>
+          <span className="text-[10px] uppercase tracking-[0.32em] text-slate-300/70">3D MOON</span>
         </div>
 
         <div className="grid w-full gap-6 lg:grid-cols-[1fr_460px]">
@@ -60,13 +60,13 @@ export default function LoginPage() {
                 Power your access<br />
                 <span className="gradient-text">with AI energy</span>
               </h2>
-              <p className="text-sm text-slate-400 max-w-xs mx-auto">
-                Login premium con energia visiva NEXACOLA — glow dinamico, can evolution e progressione totale.
-              </p>
+                <p className="text-sm text-slate-400 max-w-xs mx-auto">
+                  Login premium con Luna 3D — glow dinamico, moon evolution e progressione totale.
+                </p>
             </div>
 
-            {/* ── REAL NEXACOLA CAN ── */}
-            <PremiumCanAI label="LOGIN AI CORE" power={74} size="lg" showPing />
+            {/* ── LUNA 3D ── */}
+            <PremiumCanAI label="LOGIN LUNA CORE" power={74} size="lg" showPing />
 
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
@@ -167,7 +167,7 @@ export default function LoginPage() {
 
         {/* Bottom disclaimer */}
         <p className="mt-8 text-center text-[10px] text-slate-600 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-          © 2026 NEXAFORCE Protocol • NEXACOLA AI Engine • All rights reserved
+          © 2026 LUNA CORE Protocol • 3D Moon Engine • All rights reserved
         </p>
       </div>
     </div>

@@ -42,15 +42,16 @@ export default function RegisterPage() {
       <div className="grid w-full gap-6 lg:grid-cols-[1.1fr_1fr]">
         <section className="glass-card hidden rounded-[2rem] p-8 lg:block animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
           <p className="text-xs uppercase tracking-[0.25em] text-blue-300">BEASTFULL ONBOARDING AI</p>
-          <h2 className="mt-3 text-4xl font-black leading-tight tracking-tight">Create your premium Beast identity</h2>
+          <h2 className="mt-3 text-4xl font-black leading-tight tracking-tight">Create your premium identity</h2>
           <p className="mt-3 max-w-md text-sm text-slate-300">
-            Registrazione avanzata con referral obbligatorio, visual premium e NEXACOLA AI CAN al centro dell’esperienza.
+            Registrazione avanzata con referral obbligatorio, visual premium e LUNA 3D al centro dell'esperienza.
           </p>
 
           <div className="mt-8">
             <div className="animate-can-glow-subtle">
-              <PremiumCanAI label="REGISTER AI CORE" power={82} size="lg" />
+              <PremiumCanAI label="REGISTER LUNA CORE" power={82} size="lg" />
             </div>
+          </div>
           </div>
 
           <div className="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-slate-300">

@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI CORE | Global Intelligence Network",
+  title: "LUNA CORE | 3D Moon Platform",
   description:
-    "AI CORE - Piattaforma premium con intelligenza artificiale, progressione livelli e controllo team globale.",
+    "LUNA CORE - Piattaforma premium con Luna 3D, progressione livelli e controllo team globale.",
 };
 
 export default function RootLayout({

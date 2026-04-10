@@ -52,9 +52,9 @@ export function AppShell({
 
         {/* Brand */}
         <div className="rounded-2xl border border-white/10 bg-black/22 p-4 space-y-0.5">
-          <p className="text-[9px] uppercase tracking-[0.32em] text-blue-300">NEXAFORCE Command</p>
-          <p className="text-xl font-black tracking-tight gradient-text">NEXACOLA OS</p>
-          <p className="text-[10px] text-slate-400 leading-relaxed">Realtime growth • team control • reward pulse</p>
+          <p className="text-[9px] uppercase tracking-[0.32em] text-blue-300">LUNA CORE Command</p>
+          <p className="text-xl font-black tracking-tight gradient-text">LUNA OS</p>
+          <p className="text-[10px] text-slate-400 leading-relaxed">Realtime growth • team control • moon pulse</p>
         </div>
 
         {/* Mini can */}

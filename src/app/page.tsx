@@ -14,8 +14,8 @@ export default function Home() {
             <Zap className="h-4 w-4 text-white" />
           </div>
           <div>
-            <p className="text-[9px] uppercase tracking-[0.28em] text-blue-300">AI CORE Protocol</p>
-            <p className="text-sm font-black tracking-tight leading-none">Global Intelligence</p>
+            <p className="text-[9px] uppercase tracking-[0.28em] text-blue-300">LUNA CORE Protocol</p>
+            <p className="text-sm font-black tracking-tight leading-none">3D Moon Platform</p>
           </div>
         </div>
         <div className="flex gap-2 text-sm">
@@ -38,20 +38,20 @@ export default function Home() {
             <div>
               <p className="text-[10px] uppercase tracking-[0.30em] text-blue-300 mb-3 flex items-center gap-2">
                 <span className="inline-block h-px w-8 bg-gradient-to-r from-blue-400 to-transparent" />
-                AI CORE • GLOBAL NETWORK
+                LUNA • 3D MOON • GLOBAL
               </p>
               <h1 className="text-5xl font-black leading-[0.92] tracking-tight sm:text-6xl xl:text-7xl">
                 Connect to<br />
-                <span className="gradient-text text-glow">AI Core.</span> Sync<br />
+                <span className="gradient-text text-glow">Luna.</span> Sync<br />
                 your Team.
               </h1>
             </div>
             <p className="max-w-md text-slate-300 text-base leading-relaxed">
-              Una piattaforma premium con intelligenza artificiale: progressione livelli, mappamondo AI e controllo team in tempo reale.
+              Una piattaforma premium con Luna 3D: progressione livelli, mappamondo lunare e controllo team in tempo reale.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/register" className="btn-primary">
-                ⚡ Connect to AI Core
+                ⚡ Connect to Luna
               </Link>
               <Link href="/dashboard" className="btn-ghost">
                 View Demo Dashboard
@@ -76,7 +76,7 @@ export default function Home() {
 
           {/* Right: real can */}
           <div className="relative z-10 flex flex-col items-center justify-center gap-5 animate-slide-right">
-            <PremiumCanAI label="AI CORE — Global Network" power={82} size="lg" showPing />
+            <PremiumCanAI label="LUNA CORE — 3D Moon" power={82} size="lg" showPing />
           </div>
         </section>
 
