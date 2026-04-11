@@ -10,6 +10,11 @@ interface FizzCanProps {
   showBubbles?: boolean;
 }
 
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 export function FizzCan({ 
   balance, 
   level, 
@@ -40,12 +45,13 @@ export function FizzCan({
 
   const bubbles = useMemo(() => {
     if (!showBubbles) return [];
-    return Array.from({ length: level >= 4 ? 8 : level >= 2 ? 5 : 3 }, (_, i) => ({
+    const count = level >= 4 ? 8 : level >= 2 ? 5 : 3;
+    return Array.from({ length: count }, (_, i) => ({
       id: i,
-      left: 20 + Math.random() * 60,
-      size: 4 + Math.random() * 6,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2,
+      left: 20 + seededRandom(i * 1) * 60,
+      size: 4 + seededRandom(i * 2) * 6,
+      delay: seededRandom(i * 3) * 2,
+      duration: 2 + seededRandom(i * 4) * 2,
     }));
   }, [level, showBubbles]);
 
@@ -102,8 +108,8 @@ export function FizzCan({
                 key={i}
                 className="absolute w-1 h-1 bg-white rounded-full animate-ping"
                 style={{
-                  top: `${20 + Math.random() * 60}%`,
-                  left: `${20 + Math.random() * 60}%`,
+                  top: `${20 + seededRandom(i * 5) * 60}%`,
+                  left: `${20 + seededRandom(i * 7) * 60}%`,
                   animationDelay: `${i * 0.3}s`,
                   opacity: 0.6,
                 }}

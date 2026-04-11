@@ -26,10 +26,17 @@ body {
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  background: var(--bg-dark);
+  background: linear-gradient(180deg, #0a0f1a 0%, #050810 50%, #080c15 100%);
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 .app-container {
@@ -220,6 +227,7 @@ body {
 }
 
 .can-label .logo {
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 1.5rem;
   font-weight: 900;
   color: white;
@@ -228,6 +236,7 @@ body {
 }
 
 .can-label .bubz {
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
   background: linear-gradient(180deg, #fff 0%, #00d4ff 100%);
@@ -249,6 +258,7 @@ body {
   color: #00d4ff;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .progress-ring {
@@ -360,6 +370,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .level-1 { background: rgba(156, 163, 175, 0.2); color: #9ca3af; border: 1px solid rgba(156, 163, 175, 0.3); }
