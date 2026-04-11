@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type AnimatedNumberProps = {
   value: number;
@@ -12,25 +12,36 @@ type AnimatedNumberProps = {
 
 export function AnimatedNumber({
   value,
-  duration = 1200,
+  duration = 800,
   prefix = "",
   suffix = "",
   decimals = 0,
 }: AnimatedNumberProps) {
-  const [displayed, setDisplayed] = useState(0);
+  const [displayed, setDisplayed] = useState(value);
+  const previousValue = useRef(value);
 
   useEffect(() => {
-    const start = Date.now();
-    const tick = () => {
-      const elapsed = Date.now() - start;
+    const startValue = previousValue.current;
+    previousValue.current = value;
+    
+    if (startValue === value) return;
+    
+    const startTime = performance.now();
+    
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = eased * value;
+      const current = startValue + (value - startValue) * eased;
       setDisplayed(decimals > 0 ? parseFloat(current.toFixed(decimals)) : Math.round(current));
-      if (progress < 1) requestAnimationFrame(tick);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
     };
-    requestAnimationFrame(tick);
+    
+    requestAnimationFrame(animate);
   }, [value, duration, decimals]);
 
-  return <span>{prefix}{displayed}{suffix}</span>;
+  return <span suppressHydrationWarning>{prefix}{displayed}{suffix}</span>;
 }

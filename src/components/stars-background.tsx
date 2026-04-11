@@ -19,7 +19,7 @@ interface Star {
 
 export function StarsBackground() {
   const stars = useMemo<Star[]>(() => {
-    return Array.from({ length: 40 }, (_, i) => {
+    return Array.from({ length: 20 }, (_, i) => {
       const r1 = seededRandom(i * 3 + 1);
       const r2 = seededRandom(i * 3 + 2);
       const r3 = seededRandom(i * 3 + 3);
@@ -28,10 +28,10 @@ export function StarsBackground() {
         id: i,
         x: r1 * 100,
         y: r2 * 100,
-        size: r3 > 0.85 ? 3 : 2,
-        duration: 2 + r4 * 3,
+        size: r3 > 0.85 ? 2 : 1,
+        duration: 3 + r4 * 3,
         delay: r1 * 4,
-        maxOpacity: 0.3 + r2 * 0.4,
+        maxOpacity: 0.15 + r2 * 0.15,
       };
     });
   }, []);
@@ -41,7 +41,7 @@ export function StarsBackground() {
       {stars.map((star) => (
         <div
           key={star.id}
-          className={`star ${star.size === 3 ? "large" : ""}`}
+          className={`star ${star.size === 2 ? "large" : ""}`}
           style={{
             left: `${star.x}%`,
             top: `${star.y}%`,
