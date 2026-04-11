@@ -1,13 +1,21 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { AppShell } from "@/components/app-shell";
 import { Card, SectionTitle } from "@/components/premium";
 
 export default function WithdrawalPage() {
   const [amount, setAmount] = useState("");
+  const [balance, setBalance] = useState(0);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((res) => res.json())
+      .then((data) => setBalance(data.balance || 0))
+      .catch(() => {});
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,43 +30,78 @@ export default function WithdrawalPage() {
 
     const data = await res.json();
     if (!res.ok) {
-      setMessage(data.error ?? "Errore invio richiesta");
+      setMessage(data.error ?? "Error submitting request");
       setLoading(false);
       return;
     }
 
-    setMessage("Richiesta prelievo inviata con successo");
+    setMessage("Withdrawal request submitted successfully!");
     setAmount("");
     setLoading(false);
   }
 
   return (
-    <AppShell title="Withdrawal" subtitle="NXF extraction protocol">
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <SectionTitle title="Extraction Request" subtitle="NXF withdrawal sequence" />
-          <form className="space-y-3" onSubmit={onSubmit}>
-            <input
-              className="input-premium hud-corner font-mono text-sm"
-              placeholder="NXF_AMOUNT"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
+    <AppShell title="Withdrawal" subtitle="Withdraw funds from your account">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <SectionTitle title="Request Withdrawal" subtitle="Enter amount to withdraw" />
+          <div className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 mb-6">
+            <p className="text-sm text-neutral-400">Available Balance</p>
+            <p className="text-2xl font-semibold text-white">{balance.toFixed(2)} NXF</p>
+          </div>
+          <form className="space-y-4" onSubmit={onSubmit}>
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">Amount (NXF)</label>
+              <input
+                type="number"
+                className="input-premium"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                max={balance}
+                required
+              />
+            </div>
             <button
               type="submit"
-              disabled={loading}
-              className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm"
+              disabled={loading || Number(amount) > balance}
+              className="btn-premium btn-primary w-full"
             >
-              {loading ? "PROCESSING..." : "EXECUTE_EXTRACTION ⚡"}
+              {loading ? "Processing..." : "Submit Request"}
             </button>
           </form>
-          {message && <p className="mt-3 text-xs sm:text-sm font-mono text-cyan-300">{message}</p>}
+          {message && (
+            <p className={`mt-4 text-sm ${message.includes("success") ? "text-green-400" : "text-red-400"}`}>
+              {message}
+            </p>
+          )}
         </Card>
+
         <Card>
-          <SectionTitle title="Info" subtitle="Protocol validation" />
-          <p className="text-xs sm:text-sm text-slate-400 font-mono">Withdrawal validates available balance.</p>
-          <p className="text-xs sm:text-sm text-slate-400 font-mono mt-2">Check status from Admin panel.</p>
+          <SectionTitle title="Withdrawal Info" />
+          <div className="mt-4 space-y-4">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">1</div>
+              <div>
+                <p className="text-sm font-medium text-white">Enter Amount</p>
+                <p className="text-xs text-neutral-500 mt-1">Must be less than or equal to your balance</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">2</div>
+              <div>
+                <p className="text-sm font-medium text-white">Admin Review</p>
+                <p className="text-xs text-neutral-500 mt-1">Your request will be reviewed by admin</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">3</div>
+              <div>
+                <p className="text-sm font-medium text-white">Receive Funds</p>
+                <p className="text-xs text-neutral-500 mt-1">Approved requests will be processed</p>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
     </AppShell>

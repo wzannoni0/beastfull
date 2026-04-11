@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
-import { CanWidget } from "@/components/can-widget";
 import { Card, SectionTitle } from "@/components/premium";
 import { ClaimForm } from "@/components/claim-form";
-import { AnimatedNumber } from "@/components/animated-number";
 import { getServerSession } from "@/lib/server-session";
 import { prisma } from "@/lib/prisma";
+import { TrendingUp, Users, Calendar, Wallet } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -15,9 +14,8 @@ export default async function DashboardPage() {
 
   const balance = session.balance?.amount ? Number(session.balance.amount) : 0;
   const streak = session.profile?.streak || 0;
-  
   const level = session.profile?.currentLevel || 1;
-  const canPower = Math.min(100, Math.max(10, balance / 100 + 20));
+  const badge = session.profile?.badge || "Rookie";
 
   const teamCount = await prisma.teamMember.count({
     where: { sponsorId: session.userId, status: "ACTIVE" },
@@ -29,106 +27,118 @@ export default async function DashboardPage() {
     take: 5,
   });
 
-  return (
-    <AppShell title="Dashboard" subtitle={`NODE: ${session.username}`}>
-      <div className="grid gap-4 xl:grid-cols-3">
-        <CanWidget
-          level={level}
-          canState={`Level ${level} Luna`}
-          power={Math.round(canPower)}
-          animate
-        />
+  const rewardPerDay = level * 2;
 
-        <Card className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-          <SectionTitle title="Daily Claim" subtitle="Initialize daily cycle" />
-          <p className="text-xs sm:text-sm text-slate-300 font-mono">
-            NXF_STORAGE: <span className="font-semibold text-cyan-300"><AnimatedNumber value={balance} decimals={2} suffix=" NXF" /></span>
-          </p>
-          <p className="mt-2 text-xs sm:text-sm text-slate-400 font-mono">
-            SYNC_STREAK: <AnimatedNumber value={streak} suffix=" cycles" />
-          </p>
-          <div className="mt-4">
-            <ClaimForm rewardPerDay={level * 2} />
+  return (
+    <AppShell title="Dashboard" subtitle={`Welcome back, @${session.username}`}>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-neutral-400">Total Balance</p>
+              <p className="mt-1 text-2xl font-semibold text-white">{balance.toFixed(2)}</p>
+              <p className="text-xs text-neutral-500 mt-1">NXF</p>
+            </div>
+            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
+              <Wallet className="w-5 h-5 text-neutral-400" />
+            </div>
           </div>
         </Card>
 
-        <Card className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-          <SectionTitle title="Evolution Progress" subtitle="Matrix upgrade sequence" />
-          <p className="text-xs sm:text-sm text-slate-300 font-mono">
-            CURRENT: Lv.{level} • <span className="text-purple-300">NEURAL_CORE</span>
-          </p>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-black/60">
-            <div
-              className="h-full animate-power-shimmer"
-              style={{ width: `${canPower}%` }}
-            />
-          </div>
-          <p className="mt-2 text-[10px] sm:text-xs text-slate-400 font-mono uppercase tracking-tighter">
-            EVOLUTION_PCT: <AnimatedNumber value={canPower} suffix="%" />
-          </p>
-
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            <div className="hud-corner border border-cyan-500/20 bg-black/50 p-2 sm:p-3 text-center">
-              <p className="text-[10px] sm:text-xs text-slate-400 font-mono uppercase">STORAGE</p>
-              <p className="text-sm sm:text-lg font-black text-white">{balance.toFixed(2)}</p>
+        <Card>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-neutral-400">Daily Claim</p>
+              <p className="mt-1 text-2xl font-semibold text-white">+{rewardPerDay}</p>
+              <p className="text-xs text-neutral-500 mt-1">NXF / day</p>
             </div>
-            <div className="hud-corner border border-pink-500/20 bg-black/50 p-2 sm:p-3 text-center">
-              <p className="text-[10px] sm:text-xs text-slate-400 font-mono uppercase">NETWORK</p>
-              <p className="text-sm sm:text-lg font-black text-cyan-200">{teamCount}</p>
+            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-neutral-400" />
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-neutral-400">Team Members</p>
+              <p className="mt-1 text-2xl font-semibold text-white">{teamCount}</p>
+              <p className="text-xs text-neutral-500 mt-1">Active</p>
+            </div>
+            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
+              <Users className="w-5 h-5 text-neutral-400" />
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-sm text-neutral-400">Streak</p>
+              <p className="mt-1 text-2xl font-semibold text-white">{streak}</p>
+              <p className="text-xs text-neutral-500 mt-1">Days</p>
+            </div>
+            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
+              <Calendar className="w-5 h-5 text-neutral-400" />
             </div>
           </div>
         </Card>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-          <SectionTitle title="Team Growth" subtitle="Network node expansion" />
-          <div className="grid grid-cols-2 gap-3">
-            <div className="hud-corner border border-cyan-500/20 bg-black/50 p-3 text-center">
-              <p className="text-xl font-black text-cyan-300">{teamCount}</p>
-              <p className="text-[10px] text-slate-400 font-mono uppercase tracking-tighter">ACTIVE_NODES</p>
-            </div>
-            <div className="hud-corner border border-pink-500/20 bg-black/50 p-3 text-center">
-              <p className="text-xl font-black text-pink-300">{streak}</p>
-              <p className="text-[10px] text-slate-400 font-mono uppercase tracking-tighter">SYNC_CYCLES</p>
-            </div>
+        <Card>
+          <SectionTitle title="Daily Claim" subtitle="Claim your daily rewards" />
+          <div className="mt-4">
+            <ClaimForm rewardPerDay={rewardPerDay} />
           </div>
         </Card>
 
-        <Card className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-          <SectionTitle title="Activity Log" subtitle="System event stream" />
-          <ul className="space-y-2 text-xs sm:text-sm text-slate-300 font-mono">
-            {recentClaims.length > 0 ? recentClaims.map((claim) => (
-              <li
-                key={claim.id}
-                className="animate-fade-in hud-corner border border-cyan-500/10 bg-black/50 px-3 py-2"
-              >
-                [CLAIM] +{Number(claim.amount).toFixed(2)} NXF
-              </li>
-            )) : (
-              <li className="animate-fade-in hud-corner border border-cyan-500/10 bg-black/50 px-3 py-2 text-slate-400">
-                [EMPTY] No claims recorded
-              </li>
-            )}
-          </ul>
+        <Card>
+          <SectionTitle title="Your Progress" subtitle={`Level ${level} - ${badge}`} />
+          <div className="mt-4 space-y-4">
+            <div>
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-neutral-400">Balance Progress</span>
+                <span className="text-white font-medium">{balance.toFixed(2)} NXF</span>
+              </div>
+              <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                <div className="h-full bg-white/20 rounded-full" style={{ width: `${Math.min(100, (balance / 1000) * 100)}%` }} />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-neutral-400">Team Progress</span>
+                <span className="text-white font-medium">{teamCount} members</span>
+              </div>
+              <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                <div className="h-full bg-white/20 rounded-full" style={{ width: `${Math.min(100, (teamCount / 50) * 100)}%` }} />
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
 
-      <Card className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-        <SectionTitle title="Node Info" subtitle="Identity matrix data" />
-        <div className="grid gap-3 sm:gap-4 md:grid-cols-3">
-          <div className="hud-corner border border-cyan-500/20 bg-black/50 p-3 sm:p-4 text-center">
-            <p className="text-[10px] text-slate-400 font-mono uppercase">NODE_ID</p>
-            <p className="text-sm sm:text-base font-black text-white">@{session.username}</p>
-          </div>
-          <div className="hud-corner border border-purple-500/20 bg-black/50 p-3 sm:p-4 text-center">
-            <p className="text-[10px] text-slate-400 font-mono uppercase">NEURAL_LINK</p>
-            <p className="text-xs sm:text-sm font-black text-purple-300 break-all">{session.email}</p>
-          </div>
-          <div className="hud-corner border border-pink-500/20 bg-black/50 p-3 sm:p-4 text-center">
-            <p className="text-[10px] text-slate-400 font-mono uppercase">CLEARANCE</p>
-            <p className="text-sm sm:text-base font-black text-pink-300">{session.role}</p>
-          </div>
+      <Card>
+        <SectionTitle title="Recent Activity" subtitle="Your latest transactions" />
+        <div className="mt-4 space-y-3">
+          {recentClaims.length > 0 ? (
+            recentClaims.map((claim) => (
+              <div key={claim.id} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white">Daily Claim</p>
+                    <p className="text-xs text-neutral-500">{new Date(claim.claimedAt).toLocaleDateString()}</p>
+                  </div>
+                </div>
+                <p className="text-sm font-semibold text-green-400">+{Number(claim.amount).toFixed(2)} NXF</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-neutral-500 text-center py-4">No recent activity</p>
+          )}
         </div>
       </Card>
     </AppShell>

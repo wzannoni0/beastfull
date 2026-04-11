@@ -1,40 +1,54 @@
+import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { Card, SectionTitle } from "@/components/premium";
+import { getServerSession } from "@/lib/server-session";
+import { prisma } from "@/lib/prisma";
 
-export default function CalendarPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CalendarPage() {
+  const session = await getServerSession();
+  if (!session) redirect("/login");
+
+  const claims = await prisma.dailyClaim.findMany({
+    where: { userId: session.userId },
+    orderBy: { claimedAt: "desc" },
+    take: 30,
+  });
+
+  const claimedDays = new Set(claims.map((c) => c.claimedAt.getDate()));
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
-  const claimed = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  const today = 10;
+  const today = new Date().getDate();
+  const streak = session.profile?.streak || 0;
 
   return (
-    <AppShell title="Calendar" subtitle="Daily reward cycle matrix">
+    <AppShell title="Calendar" subtitle="Your daily claim history">
       <Card>
-        <SectionTitle title="Claim Calendar" subtitle="Cycle bonus sequence: 7/15/30 days" />
-        <div className="grid grid-cols-5 sm:grid-cols-7 gap-1 sm:gap-2">
+        <SectionTitle title="Claim Calendar" subtitle={`Current streak: ${streak} days`} />
+        <div className="grid grid-cols-5 sm:grid-cols-7 gap-2 mt-6">
           {days.map((day) => {
-            const isClaimed = claimed.has(day);
+            const isClaimed = claimedDays.has(day);
             const isToday = day === today;
             return (
-              <button
+              <div
                 key={day}
-                className={`hud-corner border px-1 sm:px-2 py-2 sm:py-3 text-xs sm:text-sm font-mono ${
+                className={`p-3 rounded-lg text-center border ${
                   isToday
-                    ? "border-cyan-400 bg-cyan-500/20 text-cyan-300"
+                    ? "border-white/30 bg-white/10 text-white"
                     : isClaimed
-                      ? "border-green-500/40 bg-green-500/10 text-green-300"
-                      : "border-cyan-500/20 bg-black/50 text-slate-400"
+                      ? "border-green-500/30 bg-green-500/10 text-green-400"
+                      : "border-white/10 bg-white/5 text-neutral-500"
                 }`}
               >
-                {day}
-              </button>
+                <p className="text-sm font-medium">{day}</p>
+                {isClaimed && <p className="text-[10px] text-green-400">✓</p>}
+              </div>
             );
           })}
         </div>
-        <form action="/api/claim" method="post" className="mt-5">
-          <button className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm">
-            Initialize Daily Cycle ⚡
-          </button>
-        </form>
+        <div className="mt-6 p-4 rounded-lg bg-white/5 border border-white/10">
+          <p className="text-sm text-neutral-400">Claim your daily reward every day to build your streak and unlock bonus rewards!</p>
+        </div>
       </Card>
     </AppShell>
   );

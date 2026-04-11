@@ -12,13 +12,8 @@ import {
   ArrowUpFromLine,
   UserCircle,
   ShieldCheck,
-  Bell,
-  Flame,
-  Trophy,
-  Zap,
-  ChevronRight,
+  LogOut,
 } from "lucide-react";
-import { PremiumCanAI } from "@/components/premium-can-ai";
 
 type MeData = {
   username: string;
@@ -30,14 +25,17 @@ type MeData = {
 };
 
 const nav = [
-  { label: "Dashboard",  href: "/dashboard",   icon: LayoutDashboard },
-  { label: "Calendario", href: "/calendar",     icon: CalendarDays },
-  { label: "Team",       href: "/team",         icon: Users },
-  { label: "Attività",   href: "/activity",     icon: Activity },
-  { label: "Deposito",   href: "/deposit",      icon: ArrowDownToLine },
-  { label: "Prelievo",   href: "/withdrawal",   icon: ArrowUpFromLine },
-  { label: "Profilo",    href: "/profile",      icon: UserCircle },
-  { label: "Admin",      href: "/admin",        icon: ShieldCheck },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Calendario", href: "/calendar", icon: CalendarDays },
+  { label: "Team", href: "/team", icon: Users },
+  { label: "Attività", href: "/activity", icon: Activity },
+  { label: "Deposito", href: "/deposit", icon: ArrowDownToLine },
+  { label: "Prelievo", href: "/withdrawal", icon: ArrowUpFromLine },
+  { label: "Profilo", href: "/profile", icon: UserCircle },
+] as const;
+
+const adminNav = [
+  { label: "Admin", href: "/admin", icon: ShieldCheck },
 ] as const;
 
 export function AppShell({
@@ -65,128 +63,152 @@ export function AppShell({
     };
   }, []);
 
-  const currentLevel = me?.level ?? 1;
-  const currentBalance = me?.balance ?? 0;
-  const currentUsername = me?.username ?? "user";
-  const currentStreak = me?.streak ?? 0;
-  const currentBadge = me?.badge ?? "Spark";
-  const currentProgress = Math.min(100, Math.max(5, currentBalance / 100 + 20));
+  const isAdmin = me?.role === "ADMIN";
 
   return (
-    <div className="premium-page mx-auto flex w-full max-w-[1540px] gap-5 px-4 py-5 sm:px-5 lg:px-7">
-      <div className="scanlines" />
-      {/* ══════════════════════════════════════
-          SIDEBAR
-      ══════════════════════════════════════ */}
-      <aside className="glass-card hud-corner hidden w-72 shrink-0 p-4 lg:flex flex-col gap-4 sticky top-5 h-fit max-h-[calc(100vh-2.5rem)] overflow-y-auto border-cyan-500/20">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-white/10 bg-[#0c0c0c] hidden lg:flex flex-col">
+          {/* Logo */}
+          <div className="p-6 border-b border-white/5">
+            <Link href="/dashboard" className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center">
+                <span className="text-lg font-bold text-white">B</span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">Beastfull</p>
+                <p className="text-[10px] text-neutral-500">Growth Platform</p>
+              </div>
+            </Link>
+          </div>
 
-        {/* Brand */}
-        <div className="hud-corner border border-cyan-500/30 bg-black/40 p-4 space-y-0.5">
-          <p className="text-[9px] uppercase tracking-[0.4em] text-cyan-400 font-black">LUNA_NET Command</p>
-          <p className="text-xl font-black tracking-tight gradient-text glitch-hover uppercase">LUNA_OS_v.8</p>
-          <p className="text-[10px] text-slate-400 leading-relaxed font-mono uppercase tracking-tighter">Realtime growth • node control • live data</p>
-        </div>
+          {/* User Card */}
+          {me && (
+            <div className="p-4 mx-4 mt-4 rounded-xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center">
+                  <span className="text-sm font-medium text-white">{me.username.charAt(0).toUpperCase()}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-white truncate">@{me.username}</p>
+                  <p className="text-xs text-neutral-500">Level {me.level}</p>
+                </div>
+              </div>
+              <div className="mt-3 p-2 rounded-lg bg-white/5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-neutral-500">Balance</span>
+                  <span className="font-semibold text-white">{me.balance.toFixed(2)} NXF</span>
+                </div>
+              </div>
+            </div>
+          )}
 
-        {/* Mini can */}
-        <div className="flex justify-center pt-1">
-          <PremiumCanAI label="" power={Math.min(100, Math.max(10, currentBalance / 100 + 20))} size="sm" />
-        </div>
+          {/* Navigation */}
+          <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+            {nav.map(({ label, href, icon: Icon }) => {
+              const active = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    active
+                      ? "bg-white/10 text-white"
+                      : "text-neutral-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${active ? "text-white" : "text-neutral-500"}`} />
+                  {label}
+                </Link>
+              );
+            })}
 
-        {/* Nav */}
-        <nav className="space-y-0.5">
-          {nav.map(({ label, href, icon: Icon }) => {
+            {isAdmin && (
+              <>
+                <div className="my-4 h-px bg-white/10" />
+                {adminNav.map(({ label, href, icon: Icon }) => {
+                  const active = pathname === href;
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                        active
+                          ? "bg-white/10 text-white"
+                          : "text-neutral-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 ${active ? "text-white" : "text-neutral-500"}`} />
+                      {label}
+                    </Link>
+                  );
+                })}
+              </>
+            )}
+          </nav>
+
+          {/* Logout */}
+          <div className="p-4 border-t border-white/5">
+            <form action="/api/auth/logout" method="POST">
+              <button
+                type="submit"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-400 hover:text-white hover:bg-white/5 w-full transition-all"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </form>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 lg:ml-64">
+          {/* Top Bar */}
+          <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0c0c0c]/80 backdrop-blur-xl">
+            <div className="flex items-center justify-between px-4 py-4 lg:px-8">
+              <div>
+                <h1 className="text-xl font-semibold text-white">{title}</h1>
+                {subtitle && <p className="text-sm text-neutral-500 mt-0.5">{subtitle}</p>}
+              </div>
+
+              {/* Balance Display */}
+              {me && (
+                <div className="flex items-center gap-3">
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                    <span className="text-xs text-neutral-500">Balance</span>
+                    <span className="text-sm font-semibold text-white">{me.balance.toFixed(2)} NXF</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </header>
+
+          {/* Page Content */}
+          <div className="p-4 lg:p-8">{children}</div>
+        </main>
+      </div>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-white/10 bg-[#0c0c0c]/95 backdrop-blur-xl">
+        <div className="flex items-center justify-around py-2">
+          {nav.slice(0, 5).map(({ label, href, icon: Icon }) => {
             const active = pathname === href;
             return (
               <Link
                 key={href}
                 href={href}
-                className={`nav-item group hud-corner ${active ? "active" : ""} font-mono uppercase tracking-widest text-[11px]`}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
+                  active ? "text-white" : "text-neutral-500"
+                }`}
               >
-                <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-cyan-300" : "text-slate-500 group-hover:text-cyan-200"}`} />
-                <span className="flex-1">{label}</span>
-                {active && <ChevronRight className="h-3.5 w-3.5 text-cyan-400" />}
+                <Icon className="w-5 h-5" />
+                <span className="text-[10px] font-medium">{label}</span>
               </Link>
             );
           })}
-        </nav>
-
-        {/* Level badge */}
-        <div className="hud-corner border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-purple-900/20 p-4 space-y-2 mt-auto">
-          <div className="flex items-center justify-between">
-            <p className="text-[9px] uppercase tracking-[0.24em] text-cyan-200 font-black">CURRENT_NODE_ID</p>
-            <span className="badge badge-blue font-mono">Lv.{currentLevel}</span>
-          </div>
-          <p className="text-base font-black text-white uppercase tracking-wider">{currentBadge}</p>
-          <div className="power-bar-track bg-black/40">
-            <div className="power-bar-fill shadow-[0_0_15px_rgba(0,243,255,0.5)]" style={{ width: `${currentProgress}%` }} />
-          </div>
-          <p className="text-[10px] text-slate-400 font-mono">{currentBalance.toFixed(2)} NXF_STORAGE</p>
         </div>
-      </aside>
-
-      {/* ══════════════════════════════════════
-          MAIN CONTENT
-      ══════════════════════════════════════ */}
-      <div className="flex min-w-0 flex-1 flex-col gap-4">
-
-        {/* Top header bar */}
-        <header className="glass-card hud-corner px-5 py-4 border-cyan-500/20">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-[9px] uppercase tracking-[0.32em] text-cyan-300 font-black">NEURAL_INTERFACE_LINK</p>
-              <h1 className="mt-0.5 text-3xl font-black tracking-tight leading-none uppercase glitch-hover">{title}</h1>
-              {subtitle && <p className="mt-1 text-sm text-slate-400 font-mono uppercase tracking-tighter">{subtitle}</p>}
-            </div>
-
-            <div className="flex items-center gap-2">
-              {/* Level chip */}
-              <div className="hidden sm:flex flex-col items-center hud-corner border border-cyan-500/30 bg-black/40 px-3 py-2 min-w-[56px]">
-                <Zap className="h-3.5 w-3.5 text-cyan-400 mb-0.5 animate-pulse" />
-                <span className="text-[10px] font-black text-white font-mono">NODE_0{currentLevel}</span>
-              </div>
-              {/* NXF chip */}
-              <div className="hud-corner bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 px-4 py-2 font-black text-sm shadow-[0_0_25px_rgba(0,243,255,0.3)] uppercase tracking-widest">
-                {currentBalance.toFixed(2)} <span className="text-white/70 text-xs">NXF</span>
-              </div>
-              {/* Notifications */}
-              <div className="relative hud-corner border border-cyan-500/30 bg-black/40 p-2.5 cursor-pointer hover:bg-cyan-500/10 transition-colors">
-                <Bell className="h-4 w-4 text-cyan-400" />
-                <span className="absolute -right-0 -top-0 h-2 w-2 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(255,0,85,0.8)]" />
-              </div>
-            </div>
-          </div>
-
-          {/* Sub row: user info */}
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="badge badge-blue font-mono uppercase">ID: {currentUsername}</span>
-            <span className="badge badge-violet font-mono uppercase">
-              <Flame className="h-3 w-3 text-cyan-300" />
-              {currentStreak} SYNC_STREAK
-            </span>
-            <span className="badge badge-pink font-mono uppercase">
-              <Trophy className="h-3 w-3 text-pink-200" />
-              {currentBadge}_RANK
-            </span>
-          </div>
-
-          {/* Mobile nav */}
-          <div className="mt-3 flex flex-wrap gap-1.5 lg:hidden">
-            {nav.slice(0, 5).map(({ label, href, icon: Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`flex items-center gap-1.5 hud-corner border border-cyan-500/20 bg-black/40 px-3 py-2 text-[10px] text-slate-400 font-black uppercase tracking-widest hover:bg-cyan-500/10 transition-colors ${pathname === href ? "!border-cyan-500 !text-cyan-400 bg-cyan-500/10" : ""}`}
-              >
-                <Icon className="h-3 w-3" />
-                {label}
-              </Link>
-            ))}
-          </div>
-        </header>
-
-        {/* Page content */}
-        {children}
-      </div>
+      </nav>
     </div>
   );
 }

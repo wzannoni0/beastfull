@@ -23,51 +23,84 @@ export default function DepositPage() {
 
     const data = await res.json();
     if (!res.ok) {
-      setMessage(data.error ?? "Errore invio richiesta");
+      setMessage(data.error ?? "Error submitting request");
       setLoading(false);
       return;
     }
 
-    setMessage("Richiesta inviata con successo");
+    setMessage("Request submitted successfully!");
     setAmount("");
     setLoading(false);
   }
 
   return (
-    <AppShell title="Deposit" subtitle="NXF transfer protocol">
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <SectionTitle title="Transfer Request" subtitle="NXF storage initialization" />
-          <form className="space-y-3" onSubmit={onSubmit}>
-            <input
-              className="input-premium hud-corner font-mono text-sm"
-              placeholder="NXF_AMOUNT"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-            <select
-              className="input-premium hud-corner font-mono text-sm"
-              value={method}
-              onChange={(e) => setMethod(e.target.value)}
-            >
-              <option>Crypto Wallet</option>
-              <option>Bank Transfer</option>
-            </select>
+    <AppShell title="Deposit" subtitle="Add funds to your account">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <SectionTitle title="Make a Deposit" subtitle="Choose your payment method" />
+          <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">Amount (NXF)</label>
+              <input
+                type="number"
+                className="input-premium"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-300 mb-2">Payment Method</label>
+              <select
+                className="input-premium"
+                value={method}
+                onChange={(e) => setMethod(e.target.value)}
+              >
+                <option>Crypto Wallet</option>
+                <option>Bank Transfer</option>
+              </select>
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm"
+              className="btn-premium btn-primary w-full"
             >
-              {loading ? "PROCESSING..." : "EXECUTE_TRANSFER ⚡"}
+              {loading ? "Processing..." : "Submit Request"}
             </button>
           </form>
-          {message && <p className="mt-3 text-xs sm:text-sm font-mono text-cyan-300">{message}</p>}
+          {message && (
+            <p className={`mt-4 text-sm ${message.includes("success") ? "text-green-400" : "text-red-400"}`}>
+              {message}
+            </p>
+          )}
         </Card>
+
         <Card>
-          <SectionTitle title="Info" subtitle="Protocol details" />
-          <p className="text-xs sm:text-sm text-slate-400 font-mono">Requests stored in secure database.</p>
-          <p className="text-xs sm:text-sm text-slate-400 font-mono mt-2">Check status from Admin panel.</p>
+          <SectionTitle title="How it works" />
+          <div className="mt-4 space-y-4">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">1</div>
+              <div>
+                <p className="text-sm font-medium text-white">Submit Request</p>
+                <p className="text-xs text-neutral-500 mt-1">Enter the amount and select payment method</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">2</div>
+              <div>
+                <p className="text-sm font-medium text-white">Wait for Approval</p>
+                <p className="text-xs text-neutral-500 mt-1">Admin will review your request</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-medium text-white">3</div>
+              <div>
+                <p className="text-sm font-medium text-white">Receive Funds</p>
+                <p className="text-xs text-neutral-500 mt-1">Balance will be updated after approval</p>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
     </AppShell>
