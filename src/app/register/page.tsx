@@ -1,292 +1,122 @@
-"use client";
-
-import { FormEvent, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { CyberpunkParticles } from "@/components/cyberpunk-particles";
-import { AnimatedCard, GlowButton, TextGlow, PulseDot } from "@/components/animated-ui";
-import { Zap, Gift, Users, BarChart3, Shield } from "lucide-react";
+import "@/app/globals.css";
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [referralCode, setReferralCode] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage("Passwords don't match");
-      return;
-    }
-    setLoading(true);
-    setMessage("Creating account...");
-
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password, referralCode }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      setMessage(data.error ?? "Registration failed");
-      setLoading(false);
-      return;
-    }
-
-    window.location.href = "/dashboard";
-  }
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 40 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
-  };
-
-  const stagger = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const benefits = [
-    { icon: Gift, title: "Daily Rewards", desc: "Claim NXF tokens every day" },
-    { icon: Users, title: "Team Building", desc: "Grow your network exponentially" },
-    { icon: BarChart3, title: "Real-time Analytics", desc: "Track your progress live" },
-    { icon: Shield, title: "Quantum Security", desc: "Military-grade protection" },
-  ];
-
   return (
-    <div className="min-h-screen relative flex overflow-hidden">
-      <CyberpunkParticles />
-      
-      <div className="fixed inset-0 pointer-events-none">
-        <motion.div 
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-purple-600/15 blur-[120px]"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 5, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-pink-600/15 blur-[100px]"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-        />
-      </div>
-
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
-        <motion.div 
-          className="relative z-10 flex flex-col justify-center px-16"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.div 
-            className="flex items-center gap-4 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="h-16 w-16 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-[0_0_40px_rgba(188,19,254,0.5)]">
-              <Zap className="h-8 w-8 text-white" />
+    <div className="app-container">
+      <nav className="nav-top">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+              <span className="text-white font-bold text-lg">N</span>
             </div>
             <div>
-              <p className="text-[8px] uppercase tracking-[0.5em] text-purple-400 font-black">LUNA_OS</p>
-              <p className="text-2xl font-black tracking-tighter uppercase">Neural_Matrix</p>
+              <p className="text-white font-semibold text-sm">NEXUS</p>
+              <p className="text-purple-300/70 text-xs">Premium</p>
             </div>
-          </motion.div>
+          </div>
+          <Link href="/login" className="text-purple-400 text-sm font-medium">Sign in</Link>
+        </div>
+      </nav>
 
-          <motion.h1 
-            className="text-5xl font-black text-white"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            Start your
-            <span className="block text-glow-purple mt-2">Evolution</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="mt-6 text-neutral-400 max-w-md font-mono text-lg leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <span className="text-purple-400">{" > "}</span> Join the neural network. Create your node and begin your journey to the top.
-          </motion.p>
+      <div className="scroll-area">
+        {/* Hero */}
+        <div className="text-center py-12">
+          <h1 className="text-white font-bold text-3xl mb-3 glow-text">Join Nexus</h1>
+          <p className="text-purple-300/70 text-sm">Create your premium account</p>
+        </div>
 
-          <motion.div 
-            className="mt-12 grid grid-cols-2 gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-          >
-            {benefits.map(({ icon: Icon, title, desc }) => (
-              <motion.div 
-                key={title}
-                className="glass-card p-4 space-y-2"
-                whileHover={{ scale: 1.02, borderColor: 'rgba(188, 19, 254, 0.5)' }}
-              >
-                <div className="flex items-center gap-2">
-                  <Icon className="w-4 h-4 text-purple-400" />
-                  <span className="text-sm font-bold text-white">{title}</span>
-                </div>
-                <p className="text-xs text-neutral-500">{desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+        {/* Avatar Selection */}
+        <div className="flex justify-center gap-3 mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div 
+              key={i} 
+              className={`w-14 h-14 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
+                i === 2 ? 'border-purple-500 scale-110 shadow-lg shadow-purple-500/50' : 'border-purple-500/30 opacity-60 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={`https://images.unsplash.com/photo-${1500000000000 + i * 10000000}?w=100&q=80`}
+                alt={`Avatar ${i}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
 
-          <motion.div 
-            className="mt-8 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-          >
-            <p className="text-sm font-medium text-white mb-2 flex items-center gap-2">
-              <PulseDot color="purple" />
-              <span>Welcome Bonus</span>
-            </p>
-            <p className="text-xs text-neutral-400">Enter a referral code to connect with your sponsor and unlock bonus rewards.</p>
-          </motion.div>
-        </motion.div>
-        
-        <motion.div 
-          className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-purple-600/20 blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div 
-          className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-pink-600/20 blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 5, repeat: Infinity, delay: 2 }}
-        />
-      </div>
-
-      <div className="flex-1 flex items-center justify-center p-6 relative z-10">
-        <motion.div 
-          className="w-full max-w-md"
-          variants={stagger}
-          initial="initial"
-          animate="animate"
-        >
-          <motion.div 
-            className="lg:hidden flex items-center gap-3 mb-8"
-            variants={fadeInUp}
-          >
-            <div className="h-12 w-12 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-[0_0_30px_rgba(188,19,254,0.5)]">
-              <Zap className="h-6 w-6 text-white" />
+        {/* Form Card */}
+        <div className="card p-6 mb-6">
+          <div className="space-y-4">
+            <div>
+              <label className="text-purple-300/80 text-xs font-medium mb-2 block">USERNAME</label>
+              <input
+                type="text"
+                placeholder="@username"
+                className="w-full bg-black/30 border border-purple-500/30 rounded-2xl px-4 py-3.5 text-white placeholder-purple-300/40 outline-none focus:border-purple-500/70 transition-colors"
+              />
             </div>
             <div>
-              <p className="text-[8px] uppercase tracking-[0.5em] text-purple-400 font-black">LUNA_OS</p>
-              <p className="text-lg font-black tracking-tighter uppercase">Neural_Matrix</p>
+              <label className="text-purple-300/80 text-xs font-medium mb-2 block">EMAIL</label>
+              <input
+                type="email"
+                placeholder="your@email.com"
+                className="w-full bg-black/30 border border-purple-500/30 rounded-2xl px-4 py-3.5 text-white placeholder-purple-300/40 outline-none focus:border-purple-500/70 transition-colors"
+              />
             </div>
-          </motion.div>
+            <div>
+              <label className="text-purple-300/80 text-xs font-medium mb-2 block">PASSWORD</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="w-full bg-black/30 border border-purple-500/30 rounded-2xl px-4 py-3.5 text-white placeholder-purple-300/40 outline-none focus:border-purple-500/70 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="text-purple-300/80 text-xs font-medium mb-2 block">REFERRAL CODE</label>
+              <input
+                type="text"
+                placeholder="Optional"
+                className="w-full bg-black/30 border border-purple-500/30 rounded-2xl px-4 py-3.5 text-white placeholder-purple-300/40 outline-none focus:border-purple-500/70 transition-colors"
+              />
+            </div>
+          </div>
+        </div>
 
-          <AnimatedCard>
-            <motion.h2 
-              className="text-3xl font-black uppercase tracking-tight"
-              variants={fadeInUp}
-            >
-              <TextGlow color="purple">Initialize Node</TextGlow>
-            </motion.h2>
-            <motion.p 
-              className="mt-2 text-neutral-400 font-mono"
-              variants={fadeInUp}
-            >
-              Create your account and join the network
-            </motion.p>
+        {/* Terms */}
+        <p className="text-purple-300/50 text-xs text-center mb-4">
+          By signing up, you agree to our{' '}
+          <span className="text-purple-400">Terms</span> and{' '}
+          <span className="text-purple-400">Privacy Policy</span>
+        </p>
 
-            <motion.form onSubmit={onSubmit} className="mt-8 space-y-4" variants={fadeInUp}>
-              <motion.div variants={fadeInUp}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2 uppercase tracking-wider">Username</label>
-                <input
-                  type="text"
-                  className="input-premium"
-                  placeholder="operator_name"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2 uppercase tracking-wider">Email</label>
-                <input
-                  type="email"
-                  className="input-premium"
-                  placeholder="operator@network.io"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2 uppercase tracking-wider">Password</label>
-                <input
-                  type="password"
-                  className="input-premium"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2 uppercase tracking-wider">Confirm Password</label>
-                <input
-                  type="password"
-                  className="input-premium"
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2 uppercase tracking-wider">Referral Code</label>
-                <input
-                  type="text"
-                  className="input-premium"
-                  placeholder="REFERRAL_CODE"
-                  value={referralCode}
-                  onChange={(e) => setReferralCode(e.target.value)}
-                  required
-                />
-              </motion.div>
+        {/* Register Button */}
+        <button className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-base shadow-lg shadow-purple-500/30 active:scale-[0.98] transition-transform">
+          Create Account
+        </button>
 
-              <motion.div variants={fadeInUp}>
-                <GlowButton className="w-full" variant="secondary">
-                  <span>{loading ? "Initializing..." : "Initialize Node"}</span>
-                </GlowButton>
-              </motion.div>
-            </motion.form>
+        {/* Divider */}
+        <div className="flex items-center gap-4 my-6">
+          <div className="flex-1 h-px bg-purple-500/20" />
+          <span className="text-purple-300/50 text-xs">or continue with</span>
+          <div className="flex-1 h-px bg-purple-500/20" />
+        </div>
 
-            {message && (
-              <motion.p 
-                className={`mt-4 text-sm text-center font-mono ${message.includes("success") || message.includes("creato") ? "text-green-400" : "text-red-400"}`}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                <span className={message.includes("success") || message.includes("creato") ? "text-green-400" : "text-red-500"}>{" > "}</span> {message}
-              </motion.p>
-            )}
-
-            <motion.p 
-              className="mt-8 text-center text-sm text-neutral-400"
-              variants={fadeInUp}
-            >
-              Already connected?{" "}
-              <Link href="/login" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
-                Access Network
-              </Link>
-            </motion.p>
-          </AnimatedCard>
-        </motion.div>
+        {/* Social Login */}
+        <div className="flex gap-4">
+          <button className="flex-1 card-soft py-4 flex items-center justify-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+          </button>
+          <button className="flex-1 card-soft py-4 flex items-center justify-center gap-2">
+            <svg width="20" height="20" fill="#fff" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );
