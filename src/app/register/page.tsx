@@ -58,7 +58,7 @@ export default function RegisterPage() {
           </p>
 
           <div className="mt-8 p-4 rounded-xl bg-white/5 border border-white/10">
-            <p className="text-sm font-medium text-white mb-3">What you'll get:</p>
+            <p className="text-sm font-medium text-white mb-3">What you&apos;ll get:</p>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/60" />

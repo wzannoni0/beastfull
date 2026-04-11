@@ -2,10 +2,9 @@ type CanWidgetProps = {
   level: number;
   canState: string;
   power: number;
-  animate?: boolean;
 };
 
-export function CanWidget({ level, canState, power, animate }: CanWidgetProps) {
+export function CanWidget({ level, canState, power }: CanWidgetProps) {
   return (
     <div className="card-premium">
       <div className="flex items-center justify-between mb-4">
