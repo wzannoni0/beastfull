@@ -30,11 +30,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex">
+    <div className="min-h-screen relative flex overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-purple-600/10 blur-[100px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-blue-600/10 blur-[80px]" />
+      </div>
+
       {/* Left Panel - Decorative */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
         <div className="relative z-10 flex flex-col justify-center px-12">
           <h1 className="text-4xl font-semibold text-white">
             Welcome back
@@ -44,8 +49,8 @@ export default function LoginPage() {
             Sign in to access your dashboard, manage your team, and track your growth progress.
           </p>
         </div>
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-white/5 blur-3xl" />
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-purple-600/20 blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-blue-600/20 blur-3xl" />
       </div>
 
       {/* Right Panel - Form */}

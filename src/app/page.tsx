@@ -4,16 +4,19 @@ import { ArrowRight, TrendingUp, Users, Shield } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Grid Background */}
-      <div className="fixed inset-0 bg-grid-pattern opacity-50" />
-      <div className="fixed inset-0 bg-radial-gradient" />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-purple-600/10 blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-indigo-600/5 blur-[150px]" />
+      </div>
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center">
               <span className="text-lg font-bold text-white">B</span>
             </div>
             <span className="text-lg font-semibold text-white">Beastfull</span>

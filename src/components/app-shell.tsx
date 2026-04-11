@@ -66,10 +66,16 @@ export function AppShell({
   const isAdmin = me?.role === "ADMIN";
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      <div className="flex">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full bg-purple-600/8 blur-[80px]" />
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] rounded-full bg-blue-600/8 blur-[60px]" />
+      </div>
+
+      <div className="flex relative z-10">
         {/* Sidebar */}
-        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-white/10 bg-[#0c0c0c] hidden lg:flex flex-col">
+        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-white/10 bg-[#0c0c0c]/90 backdrop-blur-xl hidden lg:flex flex-col">
           {/* Logo */}
           <div className="p-6 border-b border-white/5">
             <Link href="/dashboard" className="flex items-center gap-3">
