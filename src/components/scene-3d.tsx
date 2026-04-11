@@ -124,8 +124,8 @@ function Particles3D() {
   return (
     <points>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={300} array={points} itemSize={3} />
-        <bufferAttribute attach="attributes-color" count={300} array={colors} itemSize={3} />
+        <bufferAttribute attach="attributes-position" args={[points, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial size={0.05} vertexColors transparent opacity={0.8} sizeAttenuation />
     </points>

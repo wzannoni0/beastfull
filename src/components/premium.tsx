@@ -6,19 +6,15 @@ type CardProps = ComponentPropsWithoutRef<"section">;
 
 export function Card({ className, children, ...props }: CardProps) {
   return (
-    <motion.section
+    <section
       className={clsx(
         "card-cyberpunk",
         className,
       )}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -2, transition: { duration: 0.2 } }}
       {...props}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }
 
@@ -57,14 +53,12 @@ export function Button({ variant = "primary", className, children, ...props }: R
     ghost: "bg-transparent text-white/70 hover:text-white hover:bg-white/10",
   };
   return (
-    <motion.button 
+    <button 
       className={clsx(variants[variant], className)} 
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
       {...props}
     >
       {children}
-    </motion.button>
+    </button>
   );
 }
 
