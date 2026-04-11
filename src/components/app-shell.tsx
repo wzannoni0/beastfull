@@ -72,12 +72,12 @@ export function AppShell({
         <aside className="fixed left-0 top-0 h-screen w-64 border-r border-purple-500/20 bg-black/95 hidden lg:flex flex-col">
           <div className="p-6 border-b border-purple-500/10">
             <Link href="/dashboard" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center shadow-lg shadow-cyan-500/30">
                 <Zap className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm font-bold text-white uppercase tracking-wider">NEXUS</p>
-                <p className="text-[10px] text-purple-400 uppercase tracking-widest">Premium</p>
+                <p className="text-sm font-bold text-white uppercase tracking-wider">FizzUp</p>
+                <p className="text-[10px] text-[#00d4ff] uppercase tracking-widest">BUBZ System</p>
               </div>
             </Link>
           </div>

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function LoginPage() {
   return (
@@ -11,71 +10,77 @@ export default function LoginPage() {
       <nav className="nav-top">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center shadow-lg shadow-cyan-500/30">
+              <span className="text-white font-black text-sm">FU</span>
             </div>
             <div>
-              <p className="text-white font-semibold text-sm">NEXUS</p>
-              <p className="text-purple-300/70 text-xs">Premium</p>
+              <p className="text-white font-bold text-sm tracking-wider">FizzUp</p>
+              <p className="text-[#00d4ff]/70 text-xs">BUBZ System</p>
             </div>
           </div>
-          <Link href="/" className="text-purple-400 text-sm font-medium">Skip</Link>
+          <Link href="/" className="text-[#00d4ff] text-sm font-medium">Skip</Link>
         </div>
       </nav>
 
       <div className="scroll-area">
         {/* Hero */}
         <div className="text-center py-10">
-          <h1 className="text-white font-bold text-3xl mb-2" style={{ textShadow: '0 0 20px rgba(168, 85, 247, 0.5)' }}>
+          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#00d4ff]/20 to-[#8b5cf6]/20 border border-[#00d4ff]/30 flex items-center justify-center">
+            <span className="text-4xl">⚡</span>
+          </div>
+          <h1 
+            className="text-white font-black text-3xl mb-2"
+            style={{ textShadow: '0 0 30px rgba(0, 212, 255, 0.5)' }}
+          >
             Welcome Back
           </h1>
-          <p className="text-purple-300/70 text-sm">Sign in to continue your journey</p>
-        </div>
-
-        {/* Avatar Preview */}
-        <div className="flex justify-center mb-6">
-          <div className="relative">
-            <Avatar className="w-20 h-20">
-              <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80" />
-              <AvatarFallback>AC</AvatarFallback>
-            </Avatar>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center border-2 border-black/90">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24">
-                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-              </svg>
-            </div>
-          </div>
+          <p className="text-[#00d4ff]/70 text-sm">Continue your FizzUp journey</p>
         </div>
 
         {/* Form Card */}
-        <Card className="p-6 mb-4">
+        <Card className="glow-border p-6 mb-4">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="your@email.com" />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="your@email.com"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" />
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded bg-purple-500/20 border-purple-500/50" />
-                <span className="text-purple-300/70 text-xs">Remember me</span>
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 rounded bg-[#00d4ff]/20 border-[#00d4ff]/50" 
+                />
+                <span className="text-[#00d4ff]/70 text-xs">Remember me</span>
               </label>
-              <Button variant="ghost" size="sm" className="text-xs text-purple-400 h-auto p-0">Forgot?</Button>
+              <Button variant="ghost" size="sm" className="text-xs text-[#00d4ff] h-auto p-0">Forgot?</Button>
             </div>
           </div>
         </Card>
 
         {/* Login Button */}
-        <Button className="w-full h-12 text-base">Sign In</Button>
+        <Button className="w-full h-12 bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] text-white font-bold text-base">
+          Sign In
+        </Button>
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-5">
-          <div className="flex-1 h-px bg-purple-500/20" />
-          <span className="text-purple-300/50 text-xs">or continue with</span>
-          <div className="flex-1 h-px bg-purple-500/20" />
+          <div className="flex-1 h-px bg-[#00d4ff]/20" />
+          <span className="text-[#00d4ff]/50 text-xs">or continue with</span>
+          <div className="flex-1 h-px bg-[#00d4ff]/20" />
         </div>
 
         {/* Social Login */}
@@ -102,9 +107,9 @@ export default function LoginPage() {
         </div>
 
         {/* Register Link */}
-        <p className="text-center text-purple-300/60 text-sm">
+        <p className="text-center text-[#00d4ff]/60 text-sm">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="text-purple-400 font-semibold">Sign up</Link>
+          <Link href="/register" className="text-[#00d4ff] font-semibold">Sign up</Link>
         </p>
       </div>
     </div>

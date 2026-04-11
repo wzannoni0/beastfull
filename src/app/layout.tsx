@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NEXUS | Premium Experience",
-  description: "Premium mobile-first platform",
+  title: "FizzUp | Energy Your Growth",
+  description: "FizzUp - Premium gamified platform with BUBZ token system",
 };
 
 export default function RootLayout({

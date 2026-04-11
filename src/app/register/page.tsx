@@ -10,84 +10,117 @@ export default function RegisterPage() {
       <nav className="nav-top">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center shadow-lg shadow-cyan-500/30">
+              <span className="text-white font-black text-sm">FU</span>
             </div>
             <div>
-              <p className="text-white font-semibold text-sm">NEXUS</p>
-              <p className="text-purple-300/70 text-xs">Premium</p>
+              <p className="text-white font-bold text-sm tracking-wider">FizzUp</p>
+              <p className="text-[#00d4ff]/70 text-xs">BUBZ System</p>
             </div>
           </div>
-          <Link href="/login" className="text-purple-400 text-sm font-medium">Sign in</Link>
+          <Link href="/login" className="text-[#00d4ff] text-sm font-medium">Sign in</Link>
         </div>
       </nav>
 
       <div className="scroll-area">
         {/* Hero */}
-        <div className="text-center py-10">
-          <h1 className="text-white font-bold text-3xl mb-2" style={{ textShadow: '0 0 20px rgba(168, 85, 247, 0.5)' }}>
-            Join Nexus
+        <div className="text-center py-8">
+          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#00d4ff]/20 to-[#8b5cf6]/20 border border-[#00d4ff]/30 flex items-center justify-center relative">
+            <span className="text-4xl">🎯</span>
+            <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] flex items-center justify-center">
+              <span className="text-white text-xs">+</span>
+            </div>
+          </div>
+          <h1 
+            className="text-white font-black text-3xl mb-2"
+            style={{ textShadow: '0 0 30px rgba(0, 212, 255, 0.5)' }}
+          >
+            Join FizzUp
           </h1>
-          <p className="text-purple-300/70 text-sm">Create your premium account</p>
+          <p className="text-[#00d4ff]/70 text-sm">Start earning BUBZ today</p>
         </div>
 
-        {/* Avatar Selection */}
-        <div className="flex justify-center gap-3 mb-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div 
-              key={i} 
-              className={`w-14 h-14 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
-                i === 2 
-                  ? 'border-purple-500 scale-110 shadow-lg shadow-purple-500/50' 
-                  : 'border-purple-500/30 opacity-60 hover:opacity-100'
-              }`}
-            >
-              <img
-                src={`https://images.unsplash.com/photo-${1500000000000 + i * 10000000}?w=100&q=80`}
-                alt={`Avatar ${i}`}
-                className="w-full h-full object-cover"
-              />
+        {/* Referral Info */}
+        <Card className="glow-violet p-4 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00d4ff]/20 to-[#8b5cf6]/20 flex items-center justify-center">
+              <span className="text-lg">👤</span>
             </div>
-          ))}
-        </div>
+            <div>
+              <p className="text-white font-medium text-sm">Join via Referral</p>
+              <p className="text-[#00d4ff]/70 text-xs">Required to create account</p>
+            </div>
+          </div>
+        </Card>
 
         {/* Form Card */}
-        <Card className="p-6 mb-4">
+        <Card className="glow-border p-6 mb-4">
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" type="text" placeholder="@username" />
+              <Input 
+                id="username" 
+                type="text" 
+                placeholder="@username"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="your@email.com" />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="your@email.com"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" />
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input 
+                id="confirmPassword" 
+                type="password" 
+                placeholder="••••••••"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="referral">Referral Code</Label>
-              <Input id="referral" type="text" placeholder="Optional" />
+              <Input 
+                id="referral" 
+                type="text" 
+                placeholder="Enter referral code"
+                className="bg-black/30 border-[#00d4ff]/20 focus:border-[#00d4ff]/60"
+              />
             </div>
           </div>
         </Card>
 
         {/* Terms */}
-        <p className="text-purple-300/50 text-xs text-center mb-4">
+        <p className="text-[#00d4ff]/50 text-xs text-center mb-4">
           By signing up, you agree to our{' '}
-          <span className="text-purple-400">Terms</span> and{' '}
-          <span className="text-purple-400">Privacy Policy</span>
+          <span className="text-[#00d4ff]">Terms</span> and{' '}
+          <span className="text-[#00d4ff]">Privacy Policy</span>
         </p>
 
         {/* Register Button */}
-        <Button className="w-full h-12 text-base">Create Account</Button>
+        <Button className="w-full h-12 bg-gradient-to-r from-[#00d4ff] to-[#8b5cf6] text-white font-bold text-base">
+          Create Account
+        </Button>
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-5">
-          <div className="flex-1 h-px bg-purple-500/20" />
-          <span className="text-purple-300/50 text-xs">or continue with</span>
-          <div className="flex-1 h-px bg-purple-500/20" />
+          <div className="flex-1 h-px bg-[#00d4ff]/20" />
+          <span className="text-[#00d4ff]/50 text-xs">or continue with</span>
+          <div className="flex-1 h-px bg-[#00d4ff]/20" />
         </div>
 
         {/* Social Login */}

@@ -2,19 +2,15 @@ export type LevelDefinition = {
   id: number;
   code: string;
   name: string;
-  canState:
-    | "starter can"
-    | "charged can"
-    | "boosted can"
-    | "neon can"
-    | "beast can"
-    | "hyper beast can"
-    | "titan beast can"
-    | "legendary beast can";
+  badge: string;
+  color: string;
+  canState: number;
   rewardPerDay: number;
   minBalance: number;
   minDirects: number;
   minTeamStrength: number;
+  multiplier: number;
+  description: string;
 };
 
 export const LEVELS: LevelDefinition[] = [
@@ -22,83 +18,121 @@ export const LEVELS: LevelDefinition[] = [
     id: 1,
     code: "SPARK",
     name: "Spark",
-    canState: "starter can",
-    rewardPerDay: 0.8,
+    badge: "BRONZE",
+    color: "#9ca3af",
+    canState: 1,
+    rewardPerDay: 0.80,
     minBalance: 0,
     minDirects: 0,
     minTeamStrength: 0,
+    multiplier: 1.0,
+    description: "Begin your FizzUp journey"
   },
   {
     id: 2,
-    code: "CHARGE",
-    name: "Charge",
-    canState: "charged can",
-    rewardPerDay: 2.7,
+    code: "BUBBLE",
+    name: "Bubble",
+    badge: "SILVER",
+    color: "#c0c0c0",
+    canState: 2,
+    rewardPerDay: 1.20,
     minBalance: 100,
     minDirects: 3,
     minTeamStrength: 6,
+    multiplier: 1.5,
+    description: "Grow with 3 active referrals"
   },
   {
     id: 3,
-    code: "SURGE",
-    name: "Surge",
-    canState: "boosted can",
-    rewardPerDay: 10.7,
+    code: "FIZZ",
+    name: "Fizz",
+    badge: "GOLD",
+    color: "#fbbf24",
+    canState: 3,
+    rewardPerDay: 1.60,
     minBalance: 400,
     minDirects: 3,
     minTeamStrength: 12,
+    multiplier: 2.0,
+    description: "Expand to 9 team members"
   },
   {
     id: 4,
-    code: "PULSE",
-    name: "Pulse",
-    canState: "neon can",
-    rewardPerDay: 21.3,
+    code: "SPLASH",
+    name: "Splash",
+    badge: "PLATINUM",
+    color: "#e5e7eb",
+    canState: 4,
+    rewardPerDay: 2.00,
     minBalance: 800,
     minDirects: 6,
     minTeamStrength: 20,
+    multiplier: 2.5,
+    description: "Build a team of 20"
   },
   {
     id: 5,
-    code: "BEAST_CORE",
-    name: "Beast Core",
-    canState: "beast can",
-    rewardPerDay: 40,
+    code: "SURGE",
+    name: "Surge",
+    badge: "DIAMOND",
+    color: "#60a5fa",
+    canState: 5,
+    rewardPerDay: 2.56,
     minBalance: 1500,
     minDirects: 8,
-    minTeamStrength: 32,
+    minTeamStrength: 40,
+    multiplier: 3.2,
+    description: "Reach 40 team members"
   },
   {
     id: 6,
-    code: "OVERCHARGE",
-    name: "OverCharge",
-    canState: "hyper beast can",
-    rewardPerDay: 80,
+    code: "THUNDER",
+    name: "Thunder",
+    badge: "MASTER",
+    color: "#a855f7",
+    canState: 6,
+    rewardPerDay: 3.20,
     minBalance: 3000,
-    minDirects: 10,
-    minTeamStrength: 50,
+    minDirects: 12,
+    minTeamStrength: 80,
+    multiplier: 4.0,
+    description: "Elite status - 80 members"
   },
   {
     id: 7,
-    code: "TITAN_FLOW",
-    name: "Titan Flow",
-    canState: "titan beast can",
-    rewardPerDay: 133.3,
-    minBalance: 5000,
-    minDirects: 14,
-    minTeamStrength: 80,
+    code: "STORM",
+    name: "Storm",
+    badge: "GRANDMASTER",
+    color: "#f43f5e",
+    canState: 7,
+    rewardPerDay: 4.40,
+    minBalance: 6000,
+    minDirects: 20,
+    minTeamStrength: 150,
+    multiplier: 5.5,
+    description: "Legendary - 150 members"
   },
   {
     id: 8,
-    code: "LEGENDARY_BEAST",
-    name: "Legendary Beast",
-    canState: "legendary beast can",
-    rewardPerDay: 266.7,
-    minBalance: 10000,
-    minDirects: 18,
-    minTeamStrength: 120,
+    code: "OMEGA",
+    name: "Omega",
+    badge: "CHAMPION",
+    color: "#00d4ff",
+    canState: 8,
+    rewardPerDay: 6.40,
+    minBalance: 12000,
+    minDirects: 30,
+    minTeamStrength: 300,
+    multiplier: 8.0,
+    description: "Maximum power - 300 members"
   },
 ];
+
+export const STREAK_BONUSES = {
+  7: 0.25,
+  15: 0.50,
+  30: 1.00,
+} as const;
 
 export function computeCurrentLevel(input: {
   balance: number;
@@ -116,13 +150,20 @@ export function computeCurrentLevel(input: {
       ) ?? LEVELS[0];
 
   const next = LEVELS.find((l) => l.id === current.id + 1) ?? null;
-  const progress = next
-    ? Math.max(0, Math.min(100, (input.balance / next.minBalance) * 100))
-    : 100;
+  
+  let progress = 0;
+  if (next) {
+    const balanceProgress = ((input.balance - current.minBalance) / (next.minBalance - current.minBalance)) * 50;
+    const directsProgress = current.minDirects > 0 ? ((input.directs - current.minDirects) / (next.minDirects - current.minDirects)) * 25 : 25;
+    const teamProgress = current.minTeamStrength > 0 ? ((input.teamStrength - current.minTeamStrength) / (next.minTeamStrength - current.minTeamStrength)) * 25 : 25;
+    progress = Math.max(0, Math.min(100, balanceProgress + directsProgress + teamProgress));
+  } else {
+    progress = 100;
+  }
 
   return {
     current,
     next,
-    progress,
+    progress: Math.min(100, Math.max(0, progress)),
   };
 }
