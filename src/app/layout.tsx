@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-export const metadata = {
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
   title: "NEXUS | Premium Experience",
   description: "Premium mobile-first platform",
 };
@@ -11,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it">
-      <body className="antialiased">
+    <html lang="it" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-full antialiased">
         {children}
       </body>
     </html>

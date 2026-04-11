@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -68,208 +67,138 @@ export function AppShell({
   const isAdmin = me?.role === "ADMIN";
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-purple-600/10 blur-[100px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-cyan-600/10 blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
-      </div>
-
-      <div className="scanlines" />
-
-      <div className="flex relative z-10">
-        <motion.aside 
-          className="fixed left-0 top-0 h-screen w-64 border-r border-cyan-500/20 bg-[#0a0a0a]/95 backdrop-blur-xl hidden lg:flex flex-col"
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="p-6 border-b border-cyan-500/10">
+    <div className="min-h-screen bg-black/95">
+      <div className="flex">
+        <aside className="fixed left-0 top-0 h-screen w-64 border-r border-purple-500/20 bg-black/95 hidden lg:flex flex-col">
+          <div className="p-6 border-b border-purple-500/10">
             <Link href="/dashboard" className="flex items-center gap-3">
-              <motion.div 
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-[0_0_20px_rgba(0,243,255,0.3)]"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-              >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
                 <Zap className="w-5 h-5 text-white" />
-              </motion.div>
+              </div>
               <div>
-                <p className="text-sm font-black uppercase tracking-wider text-white">LUNA_OS</p>
-                <p className="text-[10px] text-cyan-400 uppercase tracking-widest">Neural_Matrix</p>
+                <p className="text-sm font-bold text-white uppercase tracking-wider">NEXUS</p>
+                <p className="text-[10px] text-purple-400 uppercase tracking-widest">Premium</p>
               </div>
             </Link>
           </div>
 
           {me && (
-            <motion.div 
-              className="p-4 mx-4 mt-4 rounded-xl glass-card border-cyan-500/20"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            <div className="p-4 mx-4 mt-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
               <div className="flex items-center gap-3">
-                <motion.div 
-                  className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <span className="text-sm font-bold text-cyan-400">{me.username.charAt(0).toUpperCase()}</span>
-                </motion.div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-500/30 flex items-center justify-center">
+                  <span className="text-sm font-bold text-purple-400">{me.username.charAt(0).toUpperCase()}</span>
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white truncate">@{me.username}</p>
-                  <p className="text-xs text-cyan-400">Level {me.level} • {me.badge}</p>
+                  <p className="text-xs text-purple-400">Level {me.level} • {me.badge}</p>
                 </div>
               </div>
-              <div className="mt-3 p-2 rounded-lg bg-black/30 border border-cyan-500/10">
+              <div className="mt-3 p-2 rounded-lg bg-black/30 border border-purple-500/10">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-neutral-500">Balance</span>
-                  <span className="font-bold text-cyan-400">{me.balance.toFixed(2)} NXF</span>
-                </div>
-                <div className="mt-2 h-1 bg-black/50 rounded-full overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-gradient-to-r from-cyan-500 to-purple-500"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(100, (me.balance / 1000) * 100)}%` }}
-                    transition={{ delay: 0.5, duration: 0.8 }}
-                  />
+                  <span className="text-purple-300/60">Balance</span>
+                  <span className="font-bold text-purple-400">{me.balance.toFixed(2)} NXF</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
 
           <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-            {nav.map(({ label, href, icon: Icon }, index) => {
+            {nav.map(({ label, href, icon: Icon }) => {
               const active = pathname === href;
               return (
-                <motion.div
+                <Link
                   key={href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * index }}
+                  href={href}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    active
+                      ? "bg-purple-500/10 text-purple-400 border border-purple-500/30"
+                      : "text-purple-300/60 hover:text-white hover:bg-white/5"
+                  }`}
                 >
-                  <Link
-                    href={href}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                      active
-                        ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30"
-                        : "text-neutral-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${active ? "text-cyan-400" : "text-neutral-500"}`} />
-                    {label}
-                    {active && (
-                      <motion.span 
-                        className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400"
-                        layoutId="activeDot"
-                      />
-                    )}
-                  </Link>
-                </motion.div>
+                  <Icon className={`w-4 h-4 ${active ? "text-purple-400" : "text-purple-300/40"}`} />
+                  {label}
+                  {active && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  )}
+                </Link>
               );
             })}
 
             {isAdmin && (
               <>
-                <div className="my-4 h-px bg-gradient-to-r from-cyan-500/50 to-transparent" />
-                {adminNav.map(({ label, href, icon: Icon }, index) => {
+                <div className="my-4 h-px bg-gradient-to-r from-purple-500/50 to-transparent" />
+                {adminNav.map(({ label, href, icon: Icon }) => {
                   const active = pathname === href;
                   return (
-                    <motion.div
+                    <Link
                       key={href}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 + index * 0.1 }}
+                      href={href}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                        active
+                          ? "bg-pink-500/10 text-pink-400 border border-pink-500/30"
+                          : "text-pink-300/60 hover:text-white hover:bg-white/5"
+                      }`}
                     >
-                      <Link
-                        href={href}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
-                          active
-                            ? "bg-purple-500/10 text-purple-400 border border-purple-500/30"
-                            : "text-neutral-400 hover:text-white hover:bg-white/5"
-                        }`}
-                      >
-                        <Icon className={`w-4 h-4 ${active ? "text-purple-400" : "text-neutral-500"}`} />
-                        {label}
-                      </Link>
-                    </motion.div>
+                      <Icon className={`w-4 h-4 ${active ? "text-pink-400" : "text-pink-300/40"}`} />
+                      {label}
+                    </Link>
                   );
                 })}
               </>
             )}
           </nav>
 
-          <div className="p-4 border-t border-cyan-500/10">
+          <div className="p-4 border-t border-purple-500/10">
             <form action="/api/auth/logout" method="POST">
-              <motion.button
+              <button
                 type="submit"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-400 hover:text-red-400 hover:bg-red-500/5 w-full transition-all"
-                whileHover={{ x: 5 }}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-purple-300/60 hover:text-red-400 hover:bg-red-500/5 w-full transition-all"
               >
                 <LogOut className="w-4 h-4" />
                 Logout
-              </motion.button>
+              </button>
             </form>
           </div>
-        </motion.aside>
+        </aside>
 
         <main className="flex-1 lg:ml-64">
-          <motion.header 
-            className="sticky top-0 z-40 border-b border-cyan-500/20 bg-[#0a0a0a]/80 backdrop-blur-xl"
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
+          <header className="sticky top-0 z-40 border-b border-purple-500/20 bg-black/80 backdrop-blur-xl">
             <div className="flex items-center justify-between px-4 py-4 lg:px-8">
               <div>
-                <h1 className="text-xl font-black uppercase tracking-wider text-white">{title}</h1>
-                {subtitle && <p className="text-sm text-cyan-400 mt-0.5 font-mono">{"> "}{subtitle}</p>}
+                <h1 className="text-xl font-bold uppercase tracking-wider text-white">{title}</h1>
+                {subtitle && <p className="text-sm text-purple-400 mt-0.5 font-mono">{"> "}{subtitle}</p>}
               </div>
 
               {me && (
-                <motion.div 
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg glass-card border-cyan-500/20">
-                    <span className="text-xs text-neutral-500 uppercase tracking-widest">Balance</span>
-                    <span className="text-sm font-bold text-cyan-400">{me.balance.toFixed(2)} NXF</span>
+                <div className="flex items-center gap-3">
+                  <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                    <span className="text-xs text-purple-300/60 uppercase tracking-widest">Balance</span>
+                    <span className="text-sm font-bold text-purple-400">{me.balance.toFixed(2)} NXF</span>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
-          </motion.header>
+          </header>
 
-          <motion.div 
-            className="p-4 lg:p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            {children}
-          </motion.div>
+          <div className="p-4 lg:p-8">{children}</div>
         </main>
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-cyan-500/20 bg-[#0a0a0a]/95 backdrop-blur-xl">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-purple-500/20 bg-black/95 backdrop-blur-xl">
         <div className="flex items-center justify-around py-2">
-          {nav.slice(0, 5).map(({ label, href, icon: Icon }, index) => {
+          {nav.slice(0, 5).map(({ label, href, icon: Icon }) => {
             const active = pathname === href;
             return (
-              <motion.div
+              <Link
                 key={href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * index }}
+                href={href}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
+                  active ? "text-purple-400" : "text-purple-300/40"
+                }`}
               >
-                <Link
-                  href={href}
-                  className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-                    active ? "text-cyan-400" : "text-neutral-500"
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span className="text-[10px] font-medium">{label}</span>
-                </Link>
-              </motion.div>
+                <Icon className="w-5 h-5" />
+                <span className="text-[10px] font-medium">{label}</span>
+              </Link>
             );
           })}
         </div>
