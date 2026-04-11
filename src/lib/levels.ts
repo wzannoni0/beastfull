@@ -1,169 +1,211 @@
-export type LevelDefinition = {
-  id: number;
-  code: string;
-  name: string;
-  badge: string;
-  color: string;
-  canState: number;
-  rewardPerDay: number;
-  minBalance: number;
-  minDirects: number;
-  minTeamStrength: number;
-  multiplier: number;
-  description: string;
-};
+export interface Level {
+  id: number
+  name: string
+  badge: string
+  emoji: string
+  color: string
+  bgColor: string
+  borderColor: string
+  glowColor: string
+  minBalance: number
+  minDirects: number
+  minTeamSize: number
+  minIndirects: number
+  dailyReward: number
+  multiplier: number
+  description: string
+  requirements: string[]
+  perks: string[]
+}
 
-export const LEVELS: LevelDefinition[] = [
+export const levels: Level[] = [
   {
     id: 1,
-    code: "SPARK",
     name: "Spark",
-    badge: "BRONZE",
+    badge: "SPARK",
+    emoji: "⚡",
     color: "#9ca3af",
-    canState: 1,
-    rewardPerDay: 0.80,
+    bgColor: "rgba(156, 163, 175, 0.1)",
+    borderColor: "rgba(156, 163, 175, 0.3)",
+    glowColor: "rgba(156, 163, 175, 0.3)",
     minBalance: 0,
     minDirects: 0,
-    minTeamStrength: 0,
-    multiplier: 1.0,
-    description: "Begin your FizzUp journey"
+    minTeamSize: 0,
+    minIndirects: 0,
+    dailyReward: 0.8,
+    multiplier: 1,
+    description: "Starting point - your FizzUp journey begins here",
+    requirements: ["Create account"],
+    perks: ["Base daily reward: 0.80 BUBZ", "Access to dashboard", "Basic support"],
   },
   {
     id: 2,
-    code: "BUBBLE",
     name: "Bubble",
-    badge: "SILVER",
-    color: "#c0c0c0",
-    canState: 2,
-    rewardPerDay: 1.20,
+    badge: "BUBBLE",
+    emoji: "🫧",
+    color: "#4ade80",
+    bgColor: "rgba(74, 222, 128, 0.1)",
+    borderColor: "rgba(74, 222, 128, 0.3)",
+    glowColor: "rgba(74, 222, 128, 0.4)",
     minBalance: 100,
     minDirects: 3,
-    minTeamStrength: 6,
+    minTeamSize: 0,
+    minIndirects: 0,
+    dailyReward: 1.2,
     multiplier: 1.5,
-    description: "Grow with 3 active referrals"
+    description: "First milestone - growing your network",
+    requirements: ["100 BUBZ balance", "3 active direct referrals"],
+    perks: ["+50% daily reward", "Team statistics", "Priority support"],
   },
   {
     id: 3,
-    code: "FIZZ",
     name: "Fizz",
-    badge: "GOLD",
-    color: "#fbbf24",
-    canState: 3,
-    rewardPerDay: 1.60,
+    badge: "FIZZ",
+    emoji: "✨",
+    color: "#22d3ee",
+    bgColor: "rgba(34, 211, 238, 0.1)",
+    borderColor: "rgba(34, 211, 238, 0.3)",
+    glowColor: "rgba(34, 211, 238, 0.4)",
     minBalance: 400,
     minDirects: 3,
-    minTeamStrength: 12,
-    multiplier: 2.0,
-    description: "Expand to 9 team members"
+    minTeamSize: 10,
+    minIndirects: 3,
+    dailyReward: 1.8,
+    multiplier: 2.25,
+    description: "Building momentum - team structure matters",
+    requirements: ["400 BUBZ balance", "3 active directs", "Each direct has 3+ active members"],
+    perks: ["+125% daily reward", "Advanced analytics", "Custom badges"],
   },
   {
     id: 4,
-    code: "SPLASH",
     name: "Splash",
-    badge: "PLATINUM",
-    color: "#e5e7eb",
-    canState: 4,
-    rewardPerDay: 2.00,
+    badge: "SPLASH",
+    emoji: "💧",
+    color: "#60a5fa",
+    bgColor: "rgba(96, 165, 250, 0.1)",
+    borderColor: "rgba(96, 165, 250, 0.3)",
+    glowColor: "rgba(96, 165, 250, 0.4)",
     minBalance: 800,
     minDirects: 6,
-    minTeamStrength: 20,
-    multiplier: 2.5,
-    description: "Build a team of 20"
+    minTeamSize: 25,
+    minIndirects: 10,
+    dailyReward: 2.5,
+    multiplier: 3.125,
+    description: "Making waves - your team is expanding",
+    requirements: ["800 BUBZ balance", "6 active directs", "25+ team members", "10+ indirect referrals"],
+    perks: ["+212% daily reward", "Team leaderboard", "Exclusive events access"],
   },
   {
     id: 5,
-    code: "SURGE",
     name: "Surge",
-    badge: "DIAMOND",
-    color: "#60a5fa",
-    canState: 5,
-    rewardPerDay: 2.56,
+    badge: "SURGE",
+    emoji: "⚡",
+    color: "#a78bfa",
+    bgColor: "rgba(167, 139, 250, 0.1)",
+    borderColor: "rgba(167, 139, 250, 0.3)",
+    glowColor: "rgba(167, 139, 250, 0.5)",
     minBalance: 1500,
-    minDirects: 8,
-    minTeamStrength: 40,
-    multiplier: 3.2,
-    description: "Reach 40 team members"
+    minDirects: 10,
+    minTeamSize: 50,
+    minIndirects: 25,
+    dailyReward: 4,
+    multiplier: 5,
+    description: "Power surge - significant network impact",
+    requirements: ["1500 BUBZ balance", "10 active directs", "50+ team members", "25+ indirect referrals"],
+    perks: ["+400% daily reward", "Surge badge", "Premium support", "Early feature access"],
   },
   {
     id: 6,
-    code: "THUNDER",
     name: "Thunder",
-    badge: "MASTER",
-    color: "#a855f7",
-    canState: 6,
-    rewardPerDay: 3.20,
+    badge: "THUNDER",
+    emoji: "🌩️",
+    color: "#f472b6",
+    bgColor: "rgba(244, 114, 182, 0.1)",
+    borderColor: "rgba(244, 114, 182, 0.3)",
+    glowColor: "rgba(244, 114, 182, 0.5)",
     minBalance: 3000,
-    minDirects: 12,
-    minTeamStrength: 80,
-    multiplier: 4.0,
-    description: "Elite status - 80 members"
+    minDirects: 15,
+    minTeamSize: 100,
+    minIndirects: 50,
+    dailyReward: 6,
+    multiplier: 7.5,
+    description: "Electric power - elite network builder",
+    requirements: ["3000 BUBZ balance", "15 active directs", "100+ team members", "50+ indirect referrals"],
+    perks: ["+650% daily reward", "Thunder badge", "VIP support", "Monthly bonuses"],
   },
   {
     id: 7,
-    code: "STORM",
     name: "Storm",
-    badge: "GRANDMASTER",
-    color: "#f43f5e",
-    canState: 7,
-    rewardPerDay: 4.40,
+    badge: "STORM",
+    emoji: "🌀",
+    color: "#fb923c",
+    bgColor: "rgba(251, 146, 60, 0.1)",
+    borderColor: "rgba(251, 146, 60, 0.3)",
+    glowColor: "rgba(251, 146, 60, 0.6)",
     minBalance: 6000,
-    minDirects: 20,
-    minTeamStrength: 150,
-    multiplier: 5.5,
-    description: "Legendary - 150 members"
+    minDirects: 25,
+    minTeamSize: 200,
+    minIndirects: 100,
+    dailyReward: 10,
+    multiplier: 12.5,
+    description: "Force of nature - unstoppable growth",
+    requirements: ["6000 BUBZ balance", "25 active directs", "200+ team members", "100+ indirect referrals"],
+    perks: ["+1150% daily reward", "Storm badge", "White-glove support", "Exclusive retreats"],
   },
   {
     id: 8,
-    code: "OMEGA",
     name: "Omega",
-    badge: "CHAMPION",
-    color: "#00d4ff",
-    canState: 8,
-    rewardPerDay: 6.40,
+    badge: "OMEGA",
+    emoji: "👑",
+    color: "#fbbf24",
+    bgColor: "rgba(251, 191, 36, 0.1)",
+    borderColor: "rgba(251, 191, 36, 0.4)",
+    glowColor: "rgba(251, 191, 36, 0.7)",
     minBalance: 12000,
-    minDirects: 30,
-    minTeamStrength: 300,
-    multiplier: 8.0,
-    description: "Maximum power - 300 members"
+    minDirects: 50,
+    minTeamSize: 500,
+    minIndirects: 250,
+    dailyReward: 20,
+    multiplier: 25,
+    description: "Maximum power - legendary status",
+    requirements: ["12000 BUBZ balance", "50 active directs", "500+ team members", "250+ indirect referrals"],
+    perks: ["+2400% daily reward", "Legendary Omega badge", "Founding member status", "Custom rewards", "Maximum privileges"],
   },
-];
+]
 
-export const STREAK_BONUSES = {
-  7: 0.25,
-  15: 0.50,
-  30: 1.00,
-} as const;
+export function getLevel(levelId: number): Level {
+  return levels.find(l => l.id === levelId) || levels[0]
+}
 
-export function computeCurrentLevel(input: {
-  balance: number;
-  directs: number;
-  teamStrength: number;
-}) {
-  const current =
-    [...LEVELS]
-      .reverse()
-      .find(
-        (level) =>
-          input.balance >= level.minBalance &&
-          input.directs >= level.minDirects &&
-          input.teamStrength >= level.minTeamStrength,
-      ) ?? LEVELS[0];
-
-  const next = LEVELS.find((l) => l.id === current.id + 1) ?? null;
-  
-  let progress = 0;
-  if (next) {
-    const balanceProgress = ((input.balance - current.minBalance) / (next.minBalance - current.minBalance)) * 50;
-    const directsProgress = current.minDirects > 0 ? ((input.directs - current.minDirects) / (next.minDirects - current.minDirects)) * 25 : 25;
-    const teamProgress = current.minTeamStrength > 0 ? ((input.teamStrength - current.minTeamStrength) / (next.minTeamStrength - current.minTeamStrength)) * 25 : 25;
-    progress = Math.max(0, Math.min(100, balanceProgress + directsProgress + teamProgress));
-  } else {
-    progress = 100;
+export function getLevelByBalance(balance: number): Level {
+  for (let i = levels.length - 1; i >= 0; i--) {
+    if (balance >= levels[i].minBalance) {
+      return levels[i]
+    }
   }
+  return levels[0]
+}
 
-  return {
-    current,
-    next,
-    progress: Math.min(100, Math.max(0, progress)),
-  };
+export function calculateDailyReward(levelId: number): number {
+  return levels.find(l => l.id === levelId)?.dailyReward || 0.8
+}
+
+export function getStreakBonus(streak: number): number {
+  if (streak >= 30) return 100
+  if (streak >= 15) return 50
+  if (streak >= 7) return 25
+  return 0
+}
+
+export function getNextStreakMilestone(streak: number): { days: number; bonus: number } | null {
+  if (streak < 7) return { days: 7 - streak, bonus: 25 }
+  if (streak < 15) return { days: 15 - streak, bonus: 50 }
+  if (streak < 30) return { days: 30 - streak, bonus: 100 }
+  return null
+}
+
+export function formatBalance(balance: number): string {
+  if (balance >= 1000000) return (balance / 1000000).toFixed(1) + "M"
+  if (balance >= 1000) return (balance / 1000).toFixed(1) + "K"
+  return balance.toFixed(2)
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { LEVELS } from "@/lib/levels";
+import { levels } from "@/lib/levels";
 
 type BadgeProps = {
   levelId: number;
@@ -31,7 +31,7 @@ const badgeGlow: Record<number, string> = {
 };
 
 export function Badge({ levelId, earned = true, size = "sm" }: BadgeProps) {
-  const level = LEVELS.find((l) => l.id === levelId);
+  const level = levels.find((l) => l.id === levelId);
   if (!level) return null;
 
   const color = badgeColors[levelId] ?? badgeColors[1];

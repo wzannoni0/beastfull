@@ -1,4 +1,4 @@
-import { computeCurrentLevel } from "@/lib/levels";
+import { computeCurrentLevel } from "@/lib/progression";
 
 export const demoUser = {
   username: "beast.alpha",

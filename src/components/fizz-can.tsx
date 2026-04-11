@@ -1,134 +1,195 @@
-"use client";
+"use client"
 
-import { useMemo } from "react";
+import { useRef, useMemo } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import { motion } from "framer-motion"
+import * as THREE from "three"
+import { levels, getLevel } from "@/lib/levels"
+
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed * 9999) * 10000
+  return x - Math.floor(x)
+}
 
 interface FizzCanProps {
-  balance: number;
-  level: number;
-  size?: "sm" | "md" | "lg" | "xl";
-  showLevel?: boolean;
-  showBubbles?: boolean;
+  balance: number
+  level: number
+  size?: "sm" | "md" | "lg" | "xl"
+  animated?: boolean
 }
 
-function seededRandom(seed: number) {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-}
+function FizzCanMesh({ level, balance }: { level: number; balance: number }) {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const particlesRef = useRef<THREE.Points>(null)
+  const liquidRef = useRef<THREE.Mesh>(null)
 
-export function FizzCan({ 
-  balance, 
-  level, 
-  size = "md", 
-  showLevel = true,
-  showBubbles = true 
-}: FizzCanProps) {
+  const levelData = getLevel(level)
+
   const fillPercentage = useMemo(() => {
-    if (level >= 8) return 95;
-    if (level <= 1) return Math.min(15, (balance / 100) * 100);
-    const levelThresholds = [0, 100, 400, 800, 1500, 3000, 6000, 12000];
-    const current = levelThresholds[level - 1] || 0;
-    const next = levelThresholds[level] || 12000;
-    const progress = ((balance - current) / (next - current)) * 100;
-    return Math.min(90, Math.max(20, progress + (level - 1) * 10));
-  }, [balance, level]);
+    if (level >= 8) return 0.95
+    if (level <= 1) return Math.min(0.15, balance / 100)
+    const nextLevel = levels.find(l => l.id === level + 1)
+    if (!nextLevel) return 0.9
+    const range = nextLevel.minBalance - levelData.minBalance
+    const progress = ((balance - levelData.minBalance) / range) * 100
+    return Math.min(0.9, Math.max(0.1, progress / 100 + (level - 1) * 0.1))
+  }, [balance, level, levelData.minBalance])
 
-  const sizeMap = {
-    sm: { width: 80, height: 120, fontSize: "0.6rem", bubzSize: "1rem" },
-    md: { width: 120, height: 180, fontSize: "0.8rem", bubzSize: "1.4rem" },
-    lg: { width: 160, height: 240, fontSize: "1rem", bubzSize: "1.8rem" },
-    xl: { width: 200, height: 300, fontSize: "1.2rem", bubzSize: "2.2rem" },
-  };
+  const particleCount = level >= 4 ? 50 : level >= 2 ? 30 : 15
+  const particlePositions = useMemo(() => {
+    const positions = new Float32Array(particleCount * 3)
+    for (let i = 0; i < particleCount; i++) {
+      const angle = seededRandom(i * 1) * Math.PI * 2
+      const radius = 0.2 + seededRandom(i * 2) * 0.15
+      positions[i * 3] = Math.cos(angle) * radius
+      positions[i * 3 + 1] = seededRandom(i * 3) * fillPercentage * 1.5 - 0.75
+      positions[i * 3 + 2] = Math.sin(angle) * radius
+    }
+    return positions
+  }, [particleCount, fillPercentage])
 
-  const s = sizeMap[size];
-  const glowIntensity = level >= 6 ? "1" : level >= 4 ? "0.7" : level >= 2 ? "0.4" : "0.2";
-  const glowColor = level >= 6 ? "#a855f7" : level >= 4 ? "#8b5cf6" : "#00d4ff";
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.1
+    }
+    if (particlesRef.current) {
+      const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3 + 1] += 0.008
+        if (positions[i * 3 + 1] > fillPercentage * 1.5 - 0.75) {
+          positions[i * 3 + 1] = -0.75
+        }
+      }
+      particlesRef.current.geometry.attributes.position.needsUpdate = true
+    }
+    if (liquidRef.current) {
+      liquidRef.current.scale.y = 0.5 + Math.sin(state.clock.elapsedTime * 2) * 0.02 + fillPercentage * 0.5
+    }
+  })
 
-  const bubbles = useMemo(() => {
-    if (!showBubbles) return [];
-    const count = level >= 4 ? 8 : level >= 2 ? 5 : 3;
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      left: 20 + seededRandom(i * 1) * 60,
-      size: 4 + seededRandom(i * 2) * 6,
-      delay: seededRandom(i * 3) * 2,
-      duration: 2 + seededRandom(i * 4) * 2,
-    }));
-  }, [level, showBubbles]);
+  const color1 = level >= 6 ? "#a855f7" : level >= 4 ? "#8b5cf6" : "#00d4ff"
+  const color2 = level >= 6 ? "#ec4899" : level >= 4 ? "#06b6d4" : "#8b5cf6"
 
   return (
-    <div 
-      className="can-container" 
-      style={{ width: s.width, height: s.height }}
-    >
-      <div 
-        className="can-glow" 
-        style={{ 
-          opacity: glowIntensity,
-          background: `radial-gradient(circle, ${glowColor}33 0%, transparent 70%)`,
-        }} 
-      />
-      
-      <div className="can-body">
-        <div 
-          className="can-fill" 
-          style={{ height: `${fillPercentage}%` }}
-        >
-          {showBubbles && (
-            <div className="can-bubbles">
-              {bubbles.map((b) => (
-                <div
-                  key={b.id}
-                  className="bubble"
-                  style={{
-                    left: `${b.left}%`,
-                    width: b.size,
-                    height: b.size,
-                    animationDelay: `${b.delay}s`,
-                    animationDuration: `${b.duration}s`,
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+    <group>
+      {/* Can wireframe */}
+      <mesh ref={meshRef}>
+        <cylinderGeometry args={[0.4, 0.35, 1.5, 32, 1, true]} />
+        <meshStandardMaterial
+          color={color1}
+          transparent
+          opacity={0.15}
+          side={THREE.DoubleSide}
+          wireframe
+        />
+      </mesh>
 
-        <div className="can-label" style={{ width: s.width * 0.8 }}>
-          <div className="logo" style={{ fontSize: s.fontSize, letterSpacing: "3px" }}>
-            FizzUp
-          </div>
-          <div className="bubz" style={{ fontSize: s.bubzSize }}>
-            BUBZ
-          </div>
-        </div>
+      {/* Liquid fill */}
+      <mesh ref={liquidRef} position={[0, -0.75 + fillPercentage * 0.75, 0]}>
+        <cylinderGeometry args={[0.38, 0.33, fillPercentage * 1.5, 32]} />
+        <meshStandardMaterial
+          color={color1}
+          transparent
+          opacity={0.7}
+          emissive={color1}
+          emissiveIntensity={0.4}
+        />
+      </mesh>
 
-        {level >= 5 && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full animate-ping"
-                style={{
-                  top: `${20 + seededRandom(i * 5) * 60}%`,
-                  left: `${20 + seededRandom(i * 7) * 60}%`,
-                  animationDelay: `${i * 0.3}s`,
-                  opacity: 0.6,
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Top ring */}
+      <mesh position={[0, 0.75, 0]}>
+        <torusGeometry args={[0.38, 0.05, 16, 32]} />
+        <meshStandardMaterial
+          color={color2}
+          metalness={0.9}
+          roughness={0.1}
+          emissive={color2}
+          emissiveIntensity={0.6}
+        />
+      </mesh>
 
-      {showLevel && (
-        <div 
-          className={`level-badge level-${level}`}
-          style={{ 
-            fontSize: size === "sm" ? "0.6rem" : size === "xl" ? "0.9rem" : "0.75rem"
-          }}
-        >
-          <span>LV.{level}</span>
-        </div>
+      {/* Bottom ring */}
+      <mesh position={[0, -0.75, 0]}>
+        <torusGeometry args={[0.35, 0.03, 16, 32]} />
+        <meshStandardMaterial
+          color={color1}
+          metalness={0.8}
+          roughness={0.2}
+        />
+      </mesh>
+
+      {/* Particles */}
+      <points ref={particlesRef}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[particlePositions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial size={0.025} color={color2} transparent opacity={0.8} sizeAttenuation />
+      </points>
+
+      {/* Level 5+ extra effects */}
+      {level >= 5 && (
+        <mesh position={[0, 0, 0]}>
+          <sphereGeometry args={[0.6, 32, 32]} />
+          <meshStandardMaterial color={color2} transparent opacity={0.05} />
+        </mesh>
       )}
-    </div>
-  );
+
+      {/* Level 7-8 legendary effects */}
+      {level >= 7 && (
+        <pointLight position={[0, 0.5, 0]} intensity={1} color={color2} distance={3} />
+      )}
+    </group>
+  )
+}
+
+export function FizzCan({ balance, level, size = "lg", animated = true }: FizzCanProps) {
+  const levelData = getLevel(level)
+  const sizeMap = { sm: 100, md: 150, lg: 200, xl: 280 }
+
+  return (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5, type: "spring" }}
+      className="relative flex flex-col items-center"
+    >
+      {/* Glow background */}
+      <div
+        className="absolute rounded-full blur-3xl opacity-40"
+        style={{
+          width: sizeMap[size] * 1.5,
+          height: sizeMap[size] * 1.5,
+          background: `radial-gradient(circle, ${levelData.glowColor} 0%, transparent 70%)`,
+        }}
+      />
+
+      {/* 3D Canvas */}
+      <Canvas
+        camera={{ position: [0, 0, 3], fov: 45 }}
+        style={{ width: sizeMap[size], height: sizeMap[size] * 1.5 }}
+      >
+        <ambientLight intensity={0.4} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} color="#00d4ff" />
+        <pointLight position={[-10, -10, -10]} intensity={0.4} color="#8b5cf6" />
+        <FizzCanMesh level={level} balance={balance} />
+      </Canvas>
+
+      {/* Level badge */}
+      <motion.div
+        initial={{ y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="mt-2 px-4 py-1.5 rounded-full text-xs font-bold border"
+        style={{
+          background: levelData.bgColor,
+          borderColor: levelData.borderColor,
+          color: levelData.color,
+          boxShadow: `0 0 20px ${levelData.glowColor}`,
+        }}
+      >
+        <span className="mr-1">{levelData.emoji}</span>
+        LV.{level} {levelData.badge}
+      </motion.div>
+    </motion.div>
+  )
 }

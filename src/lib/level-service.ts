@@ -33,7 +33,7 @@ export async function recalculateUserLevel(userId: string) {
           rewardPerDay: progression.rewardPerDay,
           directRequired: progression.nextLevel?.minDirects ?? 0,
           balanceMin: progression.nextLevel?.minBalance ?? 0,
-          teamRequired: progression.nextLevel?.minTeamStrength ?? 0,
+          teamRequired: progression.nextLevel?.minTeamSize ?? 0,
         },
       }),
       prisma.notification.create({
