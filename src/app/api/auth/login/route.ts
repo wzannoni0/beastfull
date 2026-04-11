@@ -3,19 +3,6 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { signAuthToken, verifyPassword } from "@/lib/auth";
 
-const DEMO_ACCOUNTS = [
-  {
-    email: "demo@beastfull.app",
-    password: "Demo123!",
-    role: "USER" as const,
-  },
-  {
-    email: "admin@beastfull.app",
-    password: "Admin123!",
-    role: "ADMIN" as const,
-  },
-];
-
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
@@ -30,20 +17,6 @@ export async function POST(request: Request) {
     }
 
     const { email, password } = parsed.data;
-
-    const demo = DEMO_ACCOUNTS.find((account) => account.email === email && account.password === password);
-    if (demo) {
-      const token = signAuthToken({ userId: `demo-${demo.role.toLowerCase()}`, role: demo.role });
-      const res = NextResponse.json({ ok: true, demo: true });
-      res.cookies.set("beastfull_token", token, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7,
-      });
-      return res;
-    }
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
@@ -60,7 +33,15 @@ export async function POST(request: Request) {
     }
 
     const token = signAuthToken({ userId: user.id, role: user.role });
-    const res = NextResponse.json({ ok: true });
+    const res = NextResponse.json({ 
+      ok: true, 
+      user: { 
+        id: user.id, 
+        email: user.email, 
+        username: user.username, 
+        role: user.role 
+      } 
+    });
     res.cookies.set("beastfull_token", token, {
       httpOnly: true,
       sameSite: "lax",

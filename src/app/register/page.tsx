@@ -44,7 +44,7 @@ export default function RegisterPage() {
           <p className="text-xs uppercase tracking-[0.25em] text-blue-300">BEASTFULL ONBOARDING AI</p>
           <h2 className="mt-3 text-4xl font-black leading-tight tracking-tight">Create your premium identity</h2>
           <p className="mt-3 max-w-md text-sm text-slate-300">
-            Registrazione avanzata con referral obbligatorio, visual premium e LUNA 3D al centro dell'esperienza.
+            Registrazione avanzata con referral obbligatorio, visual premium e LUNA 3D al centro dell&apos;esperienza.
           </p>
 
           <div className="mt-8">

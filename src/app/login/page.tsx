@@ -55,10 +55,10 @@ export default function LoginPage() {
           >
             {/* Headline */}
             <div className="text-center space-y-3">
-              <p className="text-[10px] uppercase tracking-[0.30em] text-blue-300">NEXAFORCE AI IDENTITY</p>
+              <p className="text-[10px] uppercase tracking-[0.30em] text-blue-300">LUNA CORE IDENTITY</p>
               <h2 className="text-4xl font-black leading-tight tracking-tight">
                 Power your access<br />
-                <span className="gradient-text">with AI energy</span>
+                <span className="gradient-text">with moon energy</span>
               </h2>
                 <p className="text-sm text-slate-400 max-w-xs mx-auto">
                   Login premium con Luna 3D — glow dinamico, moon evolution e progressione totale.
@@ -90,23 +90,14 @@ export default function LoginPage() {
           >
             {/* Header */}
             <div className="mb-7">
-              <p className="text-[10px] uppercase tracking-[0.26em] text-blue-300">NEXAFORCE Access</p>
+              <p className="text-[10px] uppercase tracking-[0.26em] text-blue-300">LUNA CORE Access</p>
               <h1 className="mt-2 text-3xl font-black tracking-tight">Welcome back</h1>
-              <p className="mt-1 text-sm text-slate-400">Charge your Force — sign in to continue</p>
+              <p className="mt-1 text-sm text-slate-400">Sign in per continuare</p>
             </div>
 
             {/* Mobile can */}
             <div className="mb-6 flex justify-center lg:hidden animate-scale-in">
-              <PremiumCanAI label="NEXACOLA AI" power={68} size="md" showPing />
-            </div>
-
-            {/* Demo credentials */}
-            <div className="mb-6 rounded-2xl border border-blue-300/20 bg-blue-500/8 p-4 text-xs">
-              <p className="font-bold text-blue-200 mb-1.5 tracking-wide uppercase text-[10px]">🔑 Demo Access</p>
-              <div className="space-y-1 text-slate-300">
-                <p>User:  <span className="text-white font-mono">demo@nexaforce.app</span> / <span className="text-white font-mono">Demo123!</span></p>
-                <p>Admin: <span className="text-white font-mono">admin@nexaforce.app</span> / <span className="text-white font-mono">Admin123!</span></p>
-              </div>
+              <PremiumCanAI label="LUNA CORE" power={68} size="md" showPing />
             </div>
 
             {/* Form */}
@@ -141,7 +132,7 @@ export default function LoginPage() {
                     Accesso in corso…
                   </span>
                 ) : (
-                  "Entra in NEXAFORCE ⚡"
+                  "Entra in LUNA CORE ⚡"
                 )}
               </button>
             </form>
@@ -158,9 +149,7 @@ export default function LoginPage() {
               <Link href="/register" className="hover:text-blue-300 transition-colors">
                 ✦ Crea account
               </Link>
-              <button type="button" className="hover:text-fuchsia-300 transition-colors">
-                Password dimenticata?
-              </button>
+              <span className="opacity-60">Supporto presto disponibile</span>
             </div>
           </section>
         </div>

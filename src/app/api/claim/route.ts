@@ -75,7 +75,7 @@ export async function POST(request: Request) {
 
     await recalculateUserLevel(userId);
 
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.json({ ok: true, amount: Number(amount), streakAfter });
   } catch {
     return NextResponse.json({ error: "Errore interno" }, { status: 500 });
   }

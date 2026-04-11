@@ -37,9 +37,9 @@ export default async function AdminPage() {
         <Card>
           <SectionTitle title="Azioni rapide" />
           <div className="space-y-2">
-            <button className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Modifica saldo</button>
-            <button className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Modifica livello</button>
-            <button className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Attiva / Disattiva utente</button>
+            <div className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Modifica saldo (in arrivo)</div>
+            <div className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Modifica livello (in arrivo)</div>
+            <div className="w-full rounded-xl bg-white/10 px-3 py-2 text-sm">Attiva/Disattiva utente (in arrivo)</div>
           </div>
         </Card>
       </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -17,8 +18,16 @@ import {
   Zap,
   ChevronRight,
 } from "lucide-react";
-import { demoUser, levelState } from "@/lib/mock";
 import { PremiumCanAI } from "@/components/premium-can-ai";
+
+type MeData = {
+  username: string;
+  role: "USER" | "ADMIN";
+  level: number;
+  streak: number;
+  badge: string;
+  balance: number;
+};
 
 const nav = [
   { label: "Dashboard",  href: "/dashboard",   icon: LayoutDashboard },
@@ -41,6 +50,27 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [me, setMe] = useState<MeData | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch("/api/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (mounted && data) setMe(data);
+      })
+      .catch(() => undefined);
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const currentLevel = me?.level ?? 1;
+  const currentBalance = me?.balance ?? 0;
+  const currentUsername = me?.username ?? "user";
+  const currentStreak = me?.streak ?? 0;
+  const currentBadge = me?.badge ?? "Spark";
+  const currentProgress = Math.min(100, Math.max(5, currentBalance / 100 + 20));
 
   return (
     <div className="premium-page mx-auto flex w-full max-w-[1540px] gap-5 px-4 py-5 sm:px-5 lg:px-7">
@@ -54,12 +84,12 @@ export function AppShell({
         <div className="rounded-2xl border border-white/10 bg-black/22 p-4 space-y-0.5">
           <p className="text-[9px] uppercase tracking-[0.32em] text-blue-300">LUNA CORE Command</p>
           <p className="text-xl font-black tracking-tight gradient-text">LUNA OS</p>
-          <p className="text-[10px] text-slate-400 leading-relaxed">Realtime growth • team control • moon pulse</p>
+          <p className="text-[10px] text-slate-400 leading-relaxed">Realtime growth • team control • live data</p>
         </div>
 
         {/* Mini can */}
         <div className="flex justify-center pt-1">
-          <PremiumCanAI label="" power={demoUser.canPower} size="sm" />
+          <PremiumCanAI label="" power={Math.min(100, Math.max(10, currentBalance / 100 + 20))} size="sm" />
         </div>
 
         {/* Nav */}
@@ -84,13 +114,13 @@ export function AppShell({
         <div className="rounded-2xl border border-blue-300/18 bg-gradient-to-br from-blue-600/12 to-fuchsia-600/8 p-4 space-y-2 mt-auto">
           <div className="flex items-center justify-between">
             <p className="text-[9px] uppercase tracking-[0.24em] text-blue-200">Current badge</p>
-            <span className="badge badge-blue">Lv.{levelState.current.id}</span>
+            <span className="badge badge-blue">Lv.{currentLevel}</span>
           </div>
-          <p className="text-base font-bold text-white">{levelState.current.name}</p>
+          <p className="text-base font-bold text-white">{currentBadge}</p>
           <div className="power-bar-track">
-            <div className="power-bar-fill" style={{ width: `${levelState.progress}%` }} />
+            <div className="power-bar-fill" style={{ width: `${currentProgress}%` }} />
           </div>
-          <p className="text-[10px] text-slate-400">{demoUser.balance.toFixed(2)} NXF balance</p>
+          <p className="text-[10px] text-slate-400">{currentBalance.toFixed(2)} NXF balance</p>
         </div>
       </aside>
 
@@ -112,30 +142,30 @@ export function AppShell({
               {/* Level chip */}
               <div className="hidden sm:flex flex-col items-center rounded-xl border border-white/12 bg-black/22 px-3 py-2 min-w-[56px]">
                 <Zap className="h-3.5 w-3.5 text-yellow-400 mb-0.5" />
-                <span className="text-[10px] font-bold text-white">Lv {levelState.current.id}</span>
+                <span className="text-[10px] font-bold text-white">Lv {currentLevel}</span>
               </div>
               {/* NXF chip */}
               <div className="rounded-xl bg-gradient-to-r from-blue-600 via-indigo-500 to-fuchsia-500 px-3 py-2 font-bold text-sm shadow-[0_0_22px_rgba(90,90,255,0.35)]">
-                {demoUser.balance.toFixed(2)} <span className="text-white/70 text-xs">NXF</span>
+                {currentBalance.toFixed(2)} <span className="text-white/70 text-xs">NXF</span>
               </div>
               {/* Notifications */}
-              <button className="relative rounded-xl border border-white/14 bg-black/22 p-2.5 hover:bg-white/5 transition-colors">
+              <div className="relative rounded-xl border border-white/14 bg-black/22 p-2.5">
                 <Bell className="h-4 w-4" />
                 <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-fuchsia-400 ring-2 ring-[#03050f]" />
-              </button>
+              </div>
             </div>
           </div>
 
           {/* Sub row: user info */}
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="badge badge-blue">@{demoUser.username}</span>
+            <span className="badge badge-blue">@{currentUsername}</span>
             <span className="badge badge-violet">
               <Flame className="h-3 w-3 text-orange-300" />
-              {demoUser.streak} streak
+              {currentStreak} streak
             </span>
             <span className="badge badge-pink">
               <Trophy className="h-3 w-3 text-fuchsia-200" />
-              {levelState.current.name}
+              {currentBadge}
             </span>
           </div>
 
