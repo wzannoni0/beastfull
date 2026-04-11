@@ -38,18 +38,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       {typeof window !== "undefined" &&
         createPortal(
-          <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none">
+          <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-3 pointer-events-none max-w-[90vw] sm:max-w-[380px]">
             {toasts.map((toast) => (
               <div
                 key={toast.id}
-                className={`toast-enter glass-card glass-card-hover rounded-xl px-5 py-4 min-w-[300px] max-w-[380px] pointer-events-auto
-                  ${toast.type === "success"     ? "border-l-4 border-l-green-400" :
-                    toast.type === "error"        ? "border-l-4 border-l-red-400" :
+                className={`toast-enter glass-card glass-card-hover hud-corner px-4 sm:px-5 py-3 sm:py-4 pointer-events-auto
+                  ${toast.type === "success"     ? "border-l-4 border-l-cyan-400" :
+                    toast.type === "error"        ? "border-l-4 border-l-pink-500" :
                     toast.type === "achievement"  ? "border-l-4 border-l-yellow-400 animate-badge-unlock" :
-                    "border-l-4 border-l-blue-400"}`}
+                    "border-l-4 border-l-purple-400"}`}
               >
-                <p className="text-sm font-bold">{toast.title}</p>
-                {toast.message && <p className="text-xs text-slate-300 mt-1">{toast.message}</p>}
+                <p className="text-xs sm:text-sm font-black uppercase tracking-wider">{toast.title}</p>
+                {toast.message && <p className="text-[10px] sm:text-xs text-slate-300 mt-1 font-mono">{toast.message}</p>}
               </div>
             ))}
           </div>,

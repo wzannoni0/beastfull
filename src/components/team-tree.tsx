@@ -6,9 +6,9 @@ export function TeamTree() {
   return (
     <div className="relative flex flex-col items-center gap-6 py-6">
       {/* Root node */}
-      <div className="glass-card glass-card-hover neon-border neon-border-animated rounded-xl px-6 py-4 text-center animate-fade-in-up">
-        <p className="text-sm font-bold">You</p>
-        <p className="text-xs text-blue-300">Root • Beast Core</p>
+      <div className="glass-card glass-card-hover hud-corner gradient-border-animated px-6 py-4 text-center animate-fade-in-up">
+        <p className="text-sm font-black text-white uppercase font-mono">YOU</p>
+        <p className="text-xs text-cyan-300 font-mono">ROOT • BEAST_CORE</p>
       </div>
 
       {/* SVG connection lines */}
@@ -27,7 +27,7 @@ export function TeamTree() {
               y1="0"
               x2={`${x}%`}
               y2="100%"
-              stroke="rgba(153,170,255,0.2)"
+              stroke="rgba(0,243,255,0.3)"
               strokeWidth="1.5"
               strokeDasharray="4 4"
             />
@@ -36,18 +36,18 @@ export function TeamTree() {
       </svg>
 
       {/* Child nodes grid */}
-      <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-3">
+      <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-3">
         {teamMembers.slice(0, 6).map((member, i) => (
           <div
             key={member.username}
-            className="glass-card glass-card-hover neon-border neon-border-animated rounded-xl px-4 py-3 text-center animate-fade-in-up"
+            className="glass-card glass-card-hover hud-corner gradient-border-animated px-4 py-3 text-center animate-fade-in-up"
             style={{ animationDelay: `${0.2 + i * 0.1}s` }}
           >
             <div className="flex items-center justify-center gap-1.5">
-              <span className={`inline-block h-2 w-2 rounded-full ${member.status === "Attivo" ? "bg-green-400 animate-pulse" : "bg-red-400"}`} />
-              <p className="text-sm font-semibold">@{member.username}</p>
+              <span className={`inline-block h-2 w-2 rounded-full ${member.status === "Attivo" ? "bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,243,255,0.8)]" : "bg-pink-400 shadow-[0_0_8px_rgba(255,0,85,0.8)]"}`} />
+              <p className="text-xs sm:text-sm font-semibold text-white font-mono">@{member.username}</p>
             </div>
-            <p className="mt-1 text-xs text-slate-300">Lv.{member.level}</p>
+            <p className="mt-1 text-[10px] sm:text-xs text-cyan-300 font-mono">LV.0{member.level}</p>
           </div>
         ))}
       </div>

@@ -131,8 +131,205 @@
 }
 
 /* =============================================
-   ANIMATED STARS BACKGROUND
+   CYBERPUNK MOBILE OPTIMIZATION
    ============================================= */
+@media (max-width: 640px) {
+  .glass-card {
+    padding: 0.875rem !important;
+  }
+  
+  .hud-corner {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 12px) 0,
+      100% 12px,
+      100% 100%,
+      12px 100%,
+      0 calc(100% - 12px)
+    );
+  }
+  
+  .hud-corner::after {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  
+  .btn-primary, .btn-ghost {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .input-premium {
+    padding: 0.7rem 0.9rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .stat-card {
+    padding: 0.75rem 0.875rem !important;
+  }
+  
+  .badge {
+    padding: 0.15rem 0.5rem !important;
+    font-size: 0.65rem !important;
+  }
+  
+  .scanlines {
+    background-size: 100% 2px !important;
+    opacity: 0.5;
+  }
+}
+
+/* =============================================
+   NEON GLOW EFFECTS
+   ============================================= */
+.neon-cyan {
+  text-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan), 0 0 30px var(--cyan);
+  box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan);
+}
+
+.neon-pink {
+  text-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink), 0 0 30px var(--pink);
+  box-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink);
+}
+
+.neon-purple {
+  text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 30px var(--neon);
+  box-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon);
+}
+
+/* =============================================
+   MOBILE TOUCH OPTIMIZATION
+   ============================================= */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary:hover, .btn-ghost:hover {
+    transform: none !important;
+  }
+  
+  .glass-card-hover:hover {
+    transform: none !important;
+  }
+  
+  .nav-item:hover {
+    background: transparent !important;
+    border-color: transparent !important;
+  }
+}
+
+/* =============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================= */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* =============================================
+   DATA GRID LINES
+   ============================================= */
+.data-grid {
+  position: relative;
+}
+
+.data-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,243,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,243,255,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* =============================================
+   CYBERPUNK BUTTON STATES
+   ============================================= */
+.btn-cyber {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #00f3ff 0%, #bc13fe 100%);
+  border: 1px solid rgba(0,243,255,0.5);
+  box-shadow: 
+    0 0 15px rgba(0,243,255,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-cyber:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 5px rgba(0,243,255,0.2);
+}
+
+/* =============================================
+   TERMINAL TEXT
+   ============================================= */
+.terminal-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  text-shadow: 0 0 5px currentColor;
+}
+
+/* =============================================
+   CORNER DECORATIONS
+   ============================================= */
+.corner-decor {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+}
+
+.corner-decor.top-left {
+  top: 0;
+  left: 0;
+  border-top: 2px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+}
+
+.corner-decor.top-right {
+  top: 0;
+  right: 0;
+  border-top: 2px solid var(--pink);
+  border-right: 2px solid var(--pink);
+}
+
+.corner-decor.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom: 2px solid var(--neon);
+  border-left: 2px solid var(--neon);
+}
+
+.corner-decor.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+/* =============================================
+   LOADING BAR
+   ============================================= */
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.loading-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,243,255,0.4), transparent);
+  animation: loading-bar 1.5s infinite;
+}
 .stars-container {
   position: fixed;
   inset: 0;

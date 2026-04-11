@@ -7,22 +7,22 @@ export default function CalendarPage() {
   const today = 10;
 
   return (
-    <AppShell title="Calendario Reward" subtitle="Claim once every 24h">
+    <AppShell title="Calendar" subtitle="Daily reward cycle matrix">
       <Card>
-        <SectionTitle title="Daily Claim Calendar" subtitle="Bonus visivi a 7/15/30 giorni" />
-        <div className="grid grid-cols-7 gap-2">
+        <SectionTitle title="Claim Calendar" subtitle="Cycle bonus sequence: 7/15/30 days" />
+        <div className="grid grid-cols-5 sm:grid-cols-7 gap-1 sm:gap-2">
           {days.map((day) => {
             const isClaimed = claimed.has(day);
             const isToday = day === today;
             return (
               <button
                 key={day}
-                className={`rounded-xl border px-2 py-3 text-sm ${
+                className={`hud-corner border px-1 sm:px-2 py-2 sm:py-3 text-xs sm:text-sm font-mono ${
                   isToday
-                    ? "border-blue-400 bg-blue-500/20"
+                    ? "border-cyan-400 bg-cyan-500/20 text-cyan-300"
                     : isClaimed
-                      ? "border-emerald-400/40 bg-emerald-500/10"
-                      : "border-white/10 bg-black/20"
+                      ? "border-green-500/40 bg-green-500/10 text-green-300"
+                      : "border-cyan-500/20 bg-black/50 text-slate-400"
                 }`}
               >
                 {day}
@@ -30,9 +30,9 @@ export default function CalendarPage() {
             );
           })}
         </div>
-        <form action="/api/claim" method="post">
-          <button className="mt-5 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 font-semibold">
-            Claim today’s power
+        <form action="/api/claim" method="post" className="mt-5">
+          <button className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm">
+            Initialize Daily Cycle ⚡
           </button>
         </form>
       </Card>

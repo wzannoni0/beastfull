@@ -46,9 +46,16 @@ export function ClaimForm({ rewardPerDay }: ClaimFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-3 font-semibold disabled:opacity-50"
+        className="btn-primary w-full glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm"
       >
-        {loading ? "Claim in corso..." : "Daily Claim"}
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            PROCESSING...
+          </span>
+        ) : (
+          "CLAIM_DAILY_NXF ⚡"
+        )}
       </button>
     </form>
   );

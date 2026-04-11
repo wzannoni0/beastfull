@@ -4,39 +4,38 @@ import { demoUser, teamMembers } from "@/lib/mock";
 
 export default function TeamPage() {
   return (
-    <AppShell title="Team" subtitle="Build your referral structure">
+    <AppShell title="Team" subtitle="Referral network matrix">
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <SectionTitle title="Referral Tree" subtitle="Struttura moderna e leggibile" />
-          <div className="grid gap-3 sm:grid-cols-2">
+          <SectionTitle title="Referral Tree" subtitle="Network topology structure" />
+          <div className="grid gap-2 sm:grid-cols-2">
             {teamMembers.map((member) => (
-              <div key={member.username} className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm">
-                <p className="font-semibold text-white">@{member.username}</p>
-                <p className="text-slate-300">Level: {member.level}</p>
-                <p className="text-slate-400">Status: {member.status}</p>
+              <div key={member.username} className="hud-corner border border-cyan-500/20 bg-black/50 p-3 text-xs sm:text-sm">
+                <p className="font-semibold text-white font-mono">@{member.username}</p>
+                <p className="text-slate-400 font-mono">LV: {member.level} | STATUS: {member.status}</p>
               </div>
             ))}
           </div>
         </Card>
 
         <Card>
-          <SectionTitle title="Referral Link" subtitle="Share and grow" />
-          <p className="text-xs text-slate-400">Codice referral</p>
-          <p className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm">{demoUser.referralCode}</p>
-          <p className="mt-3 text-xs text-slate-400">Link referral</p>
-          <p className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-xs text-slate-300">{demoUser.referralLink}</p>
+          <SectionTitle title="Referral Link" subtitle="Share to expand network" />
+          <p className="text-[10px] text-slate-400 font-mono uppercase">REFERRAL_CODE</p>
+          <p className="hud-corner border border-cyan-500/20 bg-black/50 px-3 py-2 text-xs sm:text-sm font-mono mt-1">{demoUser.referralCode}</p>
+          <p className="text-[10px] text-slate-400 font-mono uppercase mt-3">NETWORK_LINK</p>
+          <p className="hud-corner border border-pink-500/20 bg-black/50 px-3 py-2 text-[10px] sm:text-xs text-cyan-300 font-mono mt-1 break-all">{demoUser.referralLink}</p>
         </Card>
       </div>
 
       <Card>
-        <SectionTitle title="Leaderboard Team" subtitle="Forza complessiva e ranking" />
+        <SectionTitle title="Leaderboard" subtitle="Network ranking matrix" />
         <div className="grid gap-2">
           {teamMembers.map((member, i) => (
-            <div key={member.username} className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm">
-              <span>
-                #{i + 1} @{member.username}
+            <div key={member.username} className="flex items-center justify-between hud-corner border border-cyan-500/10 bg-black/50 px-3 py-2 text-xs sm:text-sm">
+              <span className="font-mono">
+                #{i + 1} <span className="text-cyan-300">@{member.username}</span>
               </span>
-              <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-blue-200">{member.level}</span>
+              <span className="rounded-full bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 text-cyan-300 font-black">Lv.{member.level}</span>
             </div>
           ))}
         </div>

@@ -34,20 +34,20 @@ export default function DepositPage() {
   }
 
   return (
-    <AppShell title="Deposito" subtitle="Invia richiesta deposito">
+    <AppShell title="Deposit" subtitle="NXF transfer protocol">
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <SectionTitle title="Nuova richiesta deposito" subtitle="Salvataggio su database" />
+          <SectionTitle title="Transfer Request" subtitle="NXF storage initialization" />
           <form className="space-y-3" onSubmit={onSubmit}>
             <input
-              className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3"
-              placeholder="Importo NXF"
+              className="input-premium hud-corner font-mono text-sm"
+              placeholder="NXF_AMOUNT"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
             />
             <select
-              className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3"
+              className="input-premium hud-corner font-mono text-sm"
               value={method}
               onChange={(e) => setMethod(e.target.value)}
             >
@@ -57,17 +57,17 @@ export default function DepositPage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 font-semibold disabled:opacity-60"
+              className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm"
             >
-              {loading ? "Invio..." : "Invia richiesta"}
+              {loading ? "PROCESSING..." : "EXECUTE_TRANSFER ⚡"}
             </button>
           </form>
-          {message && <p className="mt-3 text-sm text-slate-300">{message}</p>}
+          {message && <p className="mt-3 text-xs sm:text-sm font-mono text-cyan-300">{message}</p>}
         </Card>
         <Card>
-          <SectionTitle title="Riepilogo" />
-          <p className="text-sm text-slate-300">Le richieste vengono salvate su database.</p>
-          <p className="text-sm text-slate-300 mt-2">Controlla lo stato dalla sezione Admin.</p>
+          <SectionTitle title="Info" subtitle="Protocol details" />
+          <p className="text-xs sm:text-sm text-slate-400 font-mono">Requests stored in secure database.</p>
+          <p className="text-xs sm:text-sm text-slate-400 font-mono mt-2">Check status from Admin panel.</p>
         </Card>
       </div>
     </AppShell>

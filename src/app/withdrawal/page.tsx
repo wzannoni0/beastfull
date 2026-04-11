@@ -33,14 +33,14 @@ export default function WithdrawalPage() {
   }
 
   return (
-    <AppShell title="Prelievo" subtitle="Invia richiesta prelievo">
+    <AppShell title="Withdrawal" subtitle="NXF extraction protocol">
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <SectionTitle title="Nuova richiesta prelievo" subtitle="Salvataggio su database" />
+          <SectionTitle title="Extraction Request" subtitle="NXF withdrawal sequence" />
           <form className="space-y-3" onSubmit={onSubmit}>
             <input
-              className="w-full rounded-xl border border-white/15 bg-black/20 px-4 py-3"
-              placeholder="Importo"
+              className="input-premium hud-corner font-mono text-sm"
+              placeholder="NXF_AMOUNT"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
@@ -48,17 +48,17 @@ export default function WithdrawalPage() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-3 font-semibold disabled:opacity-60"
+              className="btn-primary glitch-hover uppercase font-black tracking-widest text-xs sm:text-sm"
             >
-              {loading ? "Invio..." : "Invia richiesta"}
+              {loading ? "PROCESSING..." : "EXECUTE_EXTRACTION ⚡"}
             </button>
           </form>
-          {message && <p className="mt-3 text-sm text-slate-300">{message}</p>}
+          {message && <p className="mt-3 text-xs sm:text-sm font-mono text-cyan-300">{message}</p>}
         </Card>
         <Card>
-          <SectionTitle title="Info" />
-          <p className="text-sm text-slate-300">Il prelievo verifica il saldo disponibile.</p>
-          <p className="text-sm text-slate-300 mt-2">Controlla lo stato dalla sezione Admin.</p>
+          <SectionTitle title="Info" subtitle="Protocol validation" />
+          <p className="text-xs sm:text-sm text-slate-400 font-mono">Withdrawal validates available balance.</p>
+          <p className="text-xs sm:text-sm text-slate-400 font-mono mt-2">Check status from Admin panel.</p>
         </Card>
       </div>
     </AppShell>
