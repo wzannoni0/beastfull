@@ -37,7 +37,6 @@ export default function RootLayout({
         <MatrixRain />
         <ParticleCanvas />
         <StarsBackground />
-        <div className="scanlines" />
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
