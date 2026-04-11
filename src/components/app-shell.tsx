@@ -74,17 +74,17 @@ export function AppShell({
 
   return (
     <div className="premium-page mx-auto flex w-full max-w-[1540px] gap-5 px-4 py-5 sm:px-5 lg:px-7">
-
+      <div className="scanlines" />
       {/* ══════════════════════════════════════
           SIDEBAR
       ══════════════════════════════════════ */}
-      <aside className="glass-card hidden w-72 shrink-0 rounded-[1.8rem] p-4 lg:flex flex-col gap-4 sticky top-5 h-fit max-h-[calc(100vh-2.5rem)] overflow-y-auto">
+      <aside className="glass-card hud-corner hidden w-72 shrink-0 p-4 lg:flex flex-col gap-4 sticky top-5 h-fit max-h-[calc(100vh-2.5rem)] overflow-y-auto border-cyan-500/20">
 
         {/* Brand */}
-        <div className="rounded-2xl border border-white/10 bg-black/22 p-4 space-y-0.5">
-          <p className="text-[9px] uppercase tracking-[0.32em] text-blue-300">LUNA CORE Command</p>
-          <p className="text-xl font-black tracking-tight gradient-text">LUNA OS</p>
-          <p className="text-[10px] text-slate-400 leading-relaxed">Realtime growth • team control • live data</p>
+        <div className="hud-corner border border-cyan-500/30 bg-black/40 p-4 space-y-0.5">
+          <p className="text-[9px] uppercase tracking-[0.4em] text-cyan-400 font-black">LUNA_NET Command</p>
+          <p className="text-xl font-black tracking-tight gradient-text glitch-hover uppercase">LUNA_OS_v.8</p>
+          <p className="text-[10px] text-slate-400 leading-relaxed font-mono uppercase tracking-tighter">Realtime growth • node control • live data</p>
         </div>
 
         {/* Mini can */}
@@ -100,27 +100,27 @@ export function AppShell({
               <Link
                 key={href}
                 href={href}
-                className={`nav-item group ${active ? "active" : ""}`}
+                className={`nav-item group hud-corner ${active ? "active" : ""} font-mono uppercase tracking-widest text-[11px]`}
               >
-                <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-blue-300" : "text-slate-500 group-hover:text-slate-200"}`} />
+                <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-cyan-300" : "text-slate-500 group-hover:text-cyan-200"}`} />
                 <span className="flex-1">{label}</span>
-                {active && <ChevronRight className="h-3.5 w-3.5 text-blue-400" />}
+                {active && <ChevronRight className="h-3.5 w-3.5 text-cyan-400" />}
               </Link>
             );
           })}
         </nav>
 
         {/* Level badge */}
-        <div className="rounded-2xl border border-blue-300/18 bg-gradient-to-br from-blue-600/12 to-fuchsia-600/8 p-4 space-y-2 mt-auto">
+        <div className="hud-corner border border-cyan-500/30 bg-gradient-to-br from-cyan-900/20 to-purple-900/20 p-4 space-y-2 mt-auto">
           <div className="flex items-center justify-between">
-            <p className="text-[9px] uppercase tracking-[0.24em] text-blue-200">Current badge</p>
-            <span className="badge badge-blue">Lv.{currentLevel}</span>
+            <p className="text-[9px] uppercase tracking-[0.24em] text-cyan-200 font-black">CURRENT_NODE_ID</p>
+            <span className="badge badge-blue font-mono">Lv.{currentLevel}</span>
           </div>
-          <p className="text-base font-bold text-white">{currentBadge}</p>
-          <div className="power-bar-track">
-            <div className="power-bar-fill" style={{ width: `${currentProgress}%` }} />
+          <p className="text-base font-black text-white uppercase tracking-wider">{currentBadge}</p>
+          <div className="power-bar-track bg-black/40">
+            <div className="power-bar-fill shadow-[0_0_15px_rgba(0,243,255,0.5)]" style={{ width: `${currentProgress}%` }} />
           </div>
-          <p className="text-[10px] text-slate-400">{currentBalance.toFixed(2)} NXF balance</p>
+          <p className="text-[10px] text-slate-400 font-mono">{currentBalance.toFixed(2)} NXF_STORAGE</p>
         </div>
       </aside>
 
@@ -130,42 +130,42 @@ export function AppShell({
       <div className="flex min-w-0 flex-1 flex-col gap-4">
 
         {/* Top header bar */}
-        <header className="glass-card rounded-[1.6rem] px-5 py-4">
+        <header className="glass-card hud-corner px-5 py-4 border-cyan-500/20">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[9px] uppercase tracking-[0.28em] text-blue-300">Control Hub</p>
-              <h1 className="mt-0.5 text-3xl font-black tracking-tight leading-none">{title}</h1>
-              {subtitle && <p className="mt-1 text-sm text-slate-400">{subtitle}</p>}
+              <p className="text-[9px] uppercase tracking-[0.32em] text-cyan-300 font-black">NEURAL_INTERFACE_LINK</p>
+              <h1 className="mt-0.5 text-3xl font-black tracking-tight leading-none uppercase glitch-hover">{title}</h1>
+              {subtitle && <p className="mt-1 text-sm text-slate-400 font-mono uppercase tracking-tighter">{subtitle}</p>}
             </div>
 
             <div className="flex items-center gap-2">
               {/* Level chip */}
-              <div className="hidden sm:flex flex-col items-center rounded-xl border border-white/12 bg-black/22 px-3 py-2 min-w-[56px]">
-                <Zap className="h-3.5 w-3.5 text-yellow-400 mb-0.5" />
-                <span className="text-[10px] font-bold text-white">Lv {currentLevel}</span>
+              <div className="hidden sm:flex flex-col items-center hud-corner border border-cyan-500/30 bg-black/40 px-3 py-2 min-w-[56px]">
+                <Zap className="h-3.5 w-3.5 text-cyan-400 mb-0.5 animate-pulse" />
+                <span className="text-[10px] font-black text-white font-mono">NODE_0{currentLevel}</span>
               </div>
               {/* NXF chip */}
-              <div className="rounded-xl bg-gradient-to-r from-blue-600 via-indigo-500 to-fuchsia-500 px-3 py-2 font-bold text-sm shadow-[0_0_22px_rgba(90,90,255,0.35)]">
+              <div className="hud-corner bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 px-4 py-2 font-black text-sm shadow-[0_0_25px_rgba(0,243,255,0.3)] uppercase tracking-widest">
                 {currentBalance.toFixed(2)} <span className="text-white/70 text-xs">NXF</span>
               </div>
               {/* Notifications */}
-              <div className="relative rounded-xl border border-white/14 bg-black/22 p-2.5">
-                <Bell className="h-4 w-4" />
-                <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-fuchsia-400 ring-2 ring-[#03050f]" />
+              <div className="relative hud-corner border border-cyan-500/30 bg-black/40 p-2.5 cursor-pointer hover:bg-cyan-500/10 transition-colors">
+                <Bell className="h-4 w-4 text-cyan-400" />
+                <span className="absolute -right-0 -top-0 h-2 w-2 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(255,0,85,0.8)]" />
               </div>
             </div>
           </div>
 
           {/* Sub row: user info */}
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="badge badge-blue">@{currentUsername}</span>
-            <span className="badge badge-violet">
-              <Flame className="h-3 w-3 text-orange-300" />
-              {currentStreak} streak
+            <span className="badge badge-blue font-mono uppercase">ID: {currentUsername}</span>
+            <span className="badge badge-violet font-mono uppercase">
+              <Flame className="h-3 w-3 text-cyan-300" />
+              {currentStreak} SYNC_STREAK
             </span>
-            <span className="badge badge-pink">
-              <Trophy className="h-3 w-3 text-fuchsia-200" />
-              {currentBadge}
+            <span className="badge badge-pink font-mono uppercase">
+              <Trophy className="h-3 w-3 text-pink-200" />
+              {currentBadge}_RANK
             </span>
           </div>
 
@@ -175,7 +175,7 @@ export function AppShell({
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-1.5 rounded-lg border border-white/10 bg-black/20 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 transition-colors ${pathname === href ? "!bg-blue-600/20 !border-blue-500/30 !text-white" : ""}`}
+                className={`flex items-center gap-1.5 hud-corner border border-cyan-500/20 bg-black/40 px-3 py-2 text-[10px] text-slate-400 font-black uppercase tracking-widest hover:bg-cyan-500/10 transition-colors ${pathname === href ? "!border-cyan-500 !text-cyan-400 bg-cyan-500/10" : ""}`}
               >
                 <Icon className="h-3 w-3" />
                 {label}

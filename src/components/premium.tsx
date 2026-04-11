@@ -7,15 +7,15 @@ export function Card({ className, children, ...props }: CardProps) {
   return (
     <section
       className={clsx(
-        "glass-card glass-card-hover rounded-[1.6rem] p-5 sm:p-6",
-        "relative overflow-hidden border border-white/9 corner-accent",
+        "glass-card glass-card-hover hud-corner p-5 sm:p-6",
+        "relative overflow-hidden border border-cyan-500/20",
         className,
       )}
       {...props}
     >
-      <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-blue-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-fuchsia-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/30 to-transparent" />
+      <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-pink-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
       <div className="relative z-10">{children}</div>
     </section>
   );
@@ -24,11 +24,11 @@ export function Card({ className, children, ...props }: CardProps) {
 export function SectionTitle({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div className="mb-5">
-      <h2 className="text-xl font-black tracking-tight text-white sm:text-2xl">{title}</h2>
+      <h2 className="text-xl font-black tracking-tight text-white sm:text-2xl uppercase glitch-hover">{title}</h2>
       {subtitle && (
-        <p className="mt-1 text-[13px] text-slate-400">{subtitle}</p>
+        <p className="mt-1 text-[13px] text-slate-400 font-mono uppercase tracking-tighter">{subtitle}</p>
       )}
-      <div className="mt-2 h-px w-10 bg-gradient-to-r from-blue-400/60 to-transparent" />
+      <div className="mt-2 h-[2px] w-12 bg-gradient-to-r from-cyan-400/80 to-transparent" />
     </div>
   );
 }
