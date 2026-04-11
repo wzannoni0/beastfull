@@ -1,27 +1,31 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2",
+  "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition-colors",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow",
+          "bg-gradient-to-r from-[#00d4ff]/20 to-[#8b5cf6]/20 text-[#00d4ff] border border-[#00d4ff]/30",
         secondary:
-          "border-purple-500/30 bg-purple-500/20 text-purple-300",
-        outline:
-          "border-purple-500/50 text-purple-300",
+          "bg-[#8b5cf6]/20 text-[#8b5cf6] border border-[#8b5cf6]/30",
+        destructive:
+          "bg-red-500/20 text-red-400 border border-red-500/30",
         success:
-          "border-green-500/30 bg-green-500/20 text-green-400",
+          "bg-green-500/20 text-green-400 border border-green-500/30",
+        warning:
+          "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30",
+        outline: "border border-white/20 text-white/80",
+        glow: "bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/50 glow-cyan",
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-);
+)
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -29,8 +33,11 @@ export interface BadgeProps
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  );
+    <div
+      className={cn(badgeVariants({ variant }), className)}
+      {...props}
+    />
+  )
 }
 
-export { Badge, badgeVariants };
+export { Badge, badgeVariants }
